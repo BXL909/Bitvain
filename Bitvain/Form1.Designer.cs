@@ -30,21 +30,28 @@ namespace Bitvain
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Bitvain));
             pictureBox1 = new PictureBox();
             btnExit = new CustomControls.RJControls.RJButton();
             panelInputs = new Panel();
+            label3 = new Label();
+            panelCaseSensitiveContainer = new Panel();
+            rjComboBox1 = new CustomControls.RJControls.RJComboBox();
+            lblDifficulty = new Label();
+            label2 = new Label();
             label1 = new Label();
             panelInputStringContainer = new Panel();
             textBoxTargetString = new TextBox();
             rjButton1 = new CustomControls.RJControls.RJButton();
+            lblTargetStringInputError = new Label();
             panelResults = new Panel();
             panelStatus = new Panel();
             lblErrorMessage = new Label();
-            label2 = new Label();
-            lblDifficulty = new Label();
+            timerTargetStringMessage = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelInputs.SuspendLayout();
+            panelCaseSensitiveContainer.SuspendLayout();
             panelInputStringContainer.SuspendLayout();
             SuspendLayout();
             // 
@@ -83,6 +90,8 @@ namespace Bitvain
             // panelInputs
             // 
             panelInputs.BackColor = Color.FromArgb(13, 16, 24);
+            panelInputs.Controls.Add(label3);
+            panelInputs.Controls.Add(panelCaseSensitiveContainer);
             panelInputs.Controls.Add(lblDifficulty);
             panelInputs.Controls.Add(label2);
             panelInputs.Controls.Add(label1);
@@ -92,6 +101,65 @@ namespace Bitvain
             panelInputs.Name = "panelInputs";
             panelInputs.Size = new Size(499, 114);
             panelInputs.TabIndex = 3;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(248, 17);
+            label3.Name = "label3";
+            label3.Size = new Size(80, 15);
+            label3.TabIndex = 9;
+            label3.Text = "Case sensitive";
+            // 
+            // panelCaseSensitiveContainer
+            // 
+            panelCaseSensitiveContainer.BackColor = Color.FromArgb(24, 27, 36);
+            panelCaseSensitiveContainer.Controls.Add(rjComboBox1);
+            panelCaseSensitiveContainer.Location = new Point(336, 12);
+            panelCaseSensitiveContainer.Name = "panelCaseSensitiveContainer";
+            panelCaseSensitiveContainer.Size = new Size(50, 24);
+            panelCaseSensitiveContainer.TabIndex = 6;
+            // 
+            // rjComboBox1
+            // 
+            rjComboBox1.BackColor = Color.FromArgb(24, 27, 36);
+            rjComboBox1.BorderColor = Color.MediumSlateBlue;
+            rjComboBox1.BorderSize = 0;
+            rjComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            rjComboBox1.Font = new Font("Segoe UI", 10F);
+            rjComboBox1.ForeColor = Color.White;
+            rjComboBox1.IconColor = Color.White;
+            rjComboBox1.Items.AddRange(new object[] { "N", "Y" });
+            rjComboBox1.ListBackColor = Color.FromArgb(24, 27, 36);
+            rjComboBox1.ListTextColor = Color.White;
+            rjComboBox1.Location = new Point(10, 1);
+            rjComboBox1.MaximumSize = new Size(30, 22);
+            rjComboBox1.MinimumSize = new Size(30, 22);
+            rjComboBox1.Name = "rjComboBox1";
+            rjComboBox1.Size = new Size(30, 22);
+            rjComboBox1.TabIndex = 10;
+            rjComboBox1.Texts = "N";
+            // 
+            // lblDifficulty
+            // 
+            lblDifficulty.AutoSize = true;
+            lblDifficulty.ForeColor = Color.FromArgb(247, 147, 26);
+            lblDifficulty.Location = new Point(92, 50);
+            lblDifficulty.Name = "lblDifficulty";
+            lblDifficulty.Size = new Size(13, 15);
+            lblDifficulty.TabIndex = 8;
+            lblDifficulty.Text = "1";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(14, 50);
+            label2.Name = "label2";
+            label2.Size = new Size(55, 15);
+            label2.TabIndex = 7;
+            label2.Text = "Difficulty";
             // 
             // label1
             // 
@@ -122,7 +190,8 @@ namespace Bitvain
             textBoxTargetString.Name = "textBoxTargetString";
             textBoxTargetString.Size = new Size(100, 22);
             textBoxTargetString.TabIndex = 4;
-            textBoxTargetString.KeyDown += textBoxTargetString_KeyDown;
+            textBoxTargetString.TextChanged += textBoxTargetString_TextChanged;
+            textBoxTargetString.KeyPress += textBoxTargetString_KeyPress;
             // 
             // rjButton1
             // 
@@ -141,6 +210,17 @@ namespace Bitvain
             rjButton1.Text = "Generate";
             rjButton1.TextColor = Color.FromArgb(13, 16, 24);
             rjButton1.UseVisualStyleBackColor = false;
+            // 
+            // lblTargetStringInputError
+            // 
+            lblTargetStringInputError.AutoSize = true;
+            lblTargetStringInputError.ForeColor = Color.IndianRed;
+            lblTargetStringInputError.Location = new Point(260, 542);
+            lblTargetStringInputError.Name = "lblTargetStringInputError";
+            lblTargetStringInputError.Size = new Size(251, 15);
+            lblTargetStringInputError.TabIndex = 9;
+            lblTargetStringInputError.Text = "O , I && l (capital o, capital i, lower L) are invalid";
+            lblTargetStringInputError.Visible = false;
             // 
             // panelResults
             // 
@@ -168,25 +248,10 @@ namespace Bitvain
             lblErrorMessage.TabIndex = 5;
             lblErrorMessage.Text = "label1";
             // 
-            // label2
+            // timerTargetStringMessage
             // 
-            label2.AutoSize = true;
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(14, 50);
-            label2.Name = "label2";
-            label2.Size = new Size(55, 15);
-            label2.TabIndex = 7;
-            label2.Text = "Difficulty";
-            // 
-            // lblDifficulty
-            // 
-            lblDifficulty.AutoSize = true;
-            lblDifficulty.ForeColor = Color.FromArgb(247, 147, 26);
-            lblDifficulty.Location = new Point(92, 50);
-            lblDifficulty.Name = "lblDifficulty";
-            lblDifficulty.Size = new Size(13, 15);
-            lblDifficulty.TabIndex = 8;
-            lblDifficulty.Text = "1";
+            timerTargetStringMessage.Interval = 5000;
+            timerTargetStringMessage.Tick += timerTargetStringMessage_Tick;
             // 
             // Bitvain
             // 
@@ -195,6 +260,7 @@ namespace Bitvain
             BackColor = Color.FromArgb(19, 22, 31);
             CancelButton = btnExit;
             ClientSize = new Size(525, 574);
+            Controls.Add(lblTargetStringInputError);
             Controls.Add(lblErrorMessage);
             Controls.Add(panelResults);
             Controls.Add(panelStatus);
@@ -209,6 +275,7 @@ namespace Bitvain
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelInputs.ResumeLayout(false);
             panelInputs.PerformLayout();
+            panelCaseSensitiveContainer.ResumeLayout(false);
             panelInputStringContainer.ResumeLayout(false);
             panelInputStringContainer.PerformLayout();
             ResumeLayout(false);
@@ -229,5 +296,10 @@ namespace Bitvain
         private Label label1;
         private Label label2;
         private Label lblDifficulty;
+        private System.Windows.Forms.Timer timerTargetStringMessage;
+        private Label lblTargetStringInputError;
+        private Panel panelCaseSensitiveContainer;
+        private Label label3;
+        private CustomControls.RJControls.RJComboBox rjComboBox1;
     }
 }

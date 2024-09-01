@@ -32,7 +32,7 @@ namespace Bitvain
             #endregion
 
             #region rounded panels
-            Control[] panelsToBeRounded = { panelInputs, panelStatus, panelResults, panelInputStringContainer };
+            Control[] panelsToBeRounded = { panelInputs, panelStatus, panelResults, panelInputStringContainer, panelCaseSensitiveContainer };
             foreach (Control control in panelsToBeRounded)
             {
                 control.Paint += Panel_Paint;
@@ -93,9 +93,32 @@ namespace Bitvain
         }
         #endregion
 
-        private void textBoxTargetString_KeyDown(object sender, KeyEventArgs e)
+        private void textBoxTargetString_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            if (e.KeyChar == 'O' || e.KeyChar == 'I' || e.KeyChar == 'l')
+            {
+                lblTargetStringInputError.Visible = true;
+                timerTargetStringMessage.Start();
+                e.Handled = true;
+            }
         }
+
+        private void timerTargetStringMessage_Tick(object sender, EventArgs e)
+        {
+            timerTargetStringMessage.Stop();
+            lblTargetStringInputError.Visible = false;
+        }
+
+        private void textBoxTargetString_TextChanged(object sender, EventArgs e)
+        {
+            //33 or 59
+            int stringLength = textBoxTargetString.Text.Length;
+            double difficulty = Math.Pow(59, stringLength);
+            lblDifficulty.Invoke((MethodInvoker)delegate
+            {
+                lblDifficulty.Text = $"{Convert.ToString(difficulty)} (59^{stringLength})";
+            });
+        }
+
     }
 }

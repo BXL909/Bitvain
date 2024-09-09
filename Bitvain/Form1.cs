@@ -12,9 +12,9 @@
 //!● Download.......... https://bitvain.btcdir.org/download/
 //
 //TODO LIST______________________________________________________________________________________________
-//TODO more address types
 //TODO help
-//TODO exclude other characters from target string input (-=,.<>#~//?etc)
+//TODO exclude other characters from target string input (-=,.<>#~//?etc), according to address type too
+//TODO export to wallet file
 //BUG LIST_______________________________________________________________________________________________
 //!░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -23,6 +23,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Collections.Concurrent;
 using NBitcoin;
+using System.Drawing.Drawing2D;
 
 namespace Bitvain
 {
@@ -79,7 +80,7 @@ namespace Bitvain
             #endregion
 
             #region rounded panels
-            Control[] panelsToBeRounded = [panelInputs, panelStatus, panelResults, panelInputStringContainer, panelCaseSensitiveContainer, panelTargetPositionContainer];
+            Control[] panelsToBeRounded = [panelInputs, panelStatus, panelResults, panelInputStringContainer, panelCaseSensitiveContainer, panelTargetPositionContainer, panelAddressTypeContainer, panelErrorMessage, panel1];
             foreach (Control control in panelsToBeRounded)
             {
                 control.Paint += Panel_Paint;
@@ -119,10 +120,9 @@ namespace Bitvain
         private void TextBoxTargetString_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (disallowedCharacters.Contains(e.KeyChar))
-            //if (e.KeyChar == 'O' || e.KeyChar == 'I' || e.KeyChar == 'l' || e.KeyChar == '0')
             {
                 lblErrorMessage.Text = disallowedCharsErrorMessage;
-                lblErrorMessage.Visible = true;
+                panelErrorMessage.Visible = true;
                 timerHideErrorMessage.Start();
                 e.Handled = true;
             }
@@ -130,7 +130,13 @@ namespace Bitvain
 
         private void TextBoxTargetString_TextChanged(object sender, EventArgs e)
         {
+            if (!comboBoxCaseSensitive.Enabled)
+            {
+                int selectionStart = textBoxTargetString.SelectionStart;
+                textBoxTargetString.Text = textBoxTargetString.Text.ToLower();
+                textBoxTargetString.SelectionStart = selectionStart;
 
+            }
             RecalculateDifficulty();
             ConstructExample();
         }
@@ -168,13 +174,20 @@ namespace Bitvain
             int availableAddressLength = totalAddressLength - addressPrefixLength;
 
             int stringLength = textBoxTargetString.Text.Length;
-            if (comboBoxCaseSensitive.SelectedIndex == 0)
+            if (comboBoxCaseSensitive.Enabled)
             {
-                availableCharacters = 32; // base58 (0,O,I,l not included) minus either A-Z or a-z, depending on user's typed target string
+                if (comboBoxCaseSensitive.SelectedIndex == 0)
+                {
+                    availableCharacters = 32;
+                }
+                else
+                {
+                    availableCharacters = 58;
+                }
             }
             else
             {
-                availableCharacters = 58; // base58 (0,O,I,l not included)
+                availableCharacters = 32;
             }
 
             int attempts = 1;
@@ -260,8 +273,6 @@ namespace Bitvain
             {
                 lblExampleAddressPart2.Visible = true;
 
-                string exampleAddressWithoutPrefix = "Gxp4vRoCGJym3xR7yCVPFHoCNxv4Twseo";
-
                 Random random = new();
                 int randomNumber = random.Next(1, exampleAddressWithoutPrefix.Length - textBoxTargetString.Text.Length - 1);
 
@@ -338,7 +349,10 @@ namespace Bitvain
             this.Invoke((MethodInvoker)delegate
             {
                 textBoxTargetString.Enabled = true;
-                comboBoxCaseSensitive.Enabled = true;
+                if (comboBoxAddressType.SelectedIndex != 2 && comboBoxAddressType.SelectedIndex != 3)
+                {
+                    comboBoxCaseSensitive.Enabled = true;
+                }
                 comboBoxTargetPosition.Enabled = true;
                 btnCPUThreadsLess.Enabled = true;
                 btnCPUThreadsMore.Enabled = true;
@@ -365,6 +379,8 @@ namespace Bitvain
 
             btnCopyAddress.Visible = false;
             btnCopyPrivateKey.Visible = false;
+            lblCompleted.Visible = false;
+            timerCompletedMessage.Stop();
         }
 
         private void RunParallelVanityAddressGeneration(string pattern, CancellationToken token)
@@ -410,7 +426,7 @@ namespace Bitvain
                     btnCopyAddress.Visible = true;
                     btnCopyPrivateKey.Location = new Point(lblGeneratedPrivateKey.Location.X + lblGeneratedPrivateKey.Width, btnCopyPrivateKey.Location.Y);
                     btnCopyPrivateKey.Visible = true;
-
+                    timerCompletedMessage.Start();
                 });
                 EnableParams();
             }
@@ -558,12 +574,22 @@ namespace Bitvain
 
         private void Bitvain_Paint(object sender, PaintEventArgs e)
         {
-            Font font = new Font("Segoe UI Emoji", 16);  // Use a font that supports emoji
-            e.Graphics.DrawString("📄", font, Brushes.Red, new PointF(10, 10));  // First symbol
-            e.Graphics.DrawString("📄", font, Brushes.Red, new PointF(20, 20));  // Second symbol, slightly offset
+            using var pen = new Pen(Color.DimGray, 1);
+            var rect = ClientRectangle;
+            rect.Inflate(-1, -1);
+            e.Graphics.DrawPath(pen, GetRoundedRect(rect, 30));
         }
 
-
+        private GraphicsPath GetRoundedRect(Rectangle rectangle, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            path.AddArc(rectangle.X, rectangle.Y, radius, radius, 180, 90);
+            path.AddArc(rectangle.Width - radius, rectangle.Y, radius, radius, 270, 90);
+            path.AddArc(rectangle.Width - radius, rectangle.Height - radius, radius, radius, 0, 90);
+            path.AddArc(rectangle.X, rectangle.Height - radius, radius, radius, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
 
         #region error handler
         private void HandleException(Exception ex, string methodName)
@@ -581,14 +607,14 @@ namespace Bitvain
             lblErrorMessage.Invoke((MethodInvoker)delegate
             {
                 lblErrorMessage.Text = errorMessage;
-                lblErrorMessage.Visible = true;
+                panelErrorMessage.Visible = true;
             });
         }
 
         private void TimerHideErrorMessage_Tick(object sender, EventArgs e)
         {
             timerHideErrorMessage.Stop();
-            lblErrorMessage.Visible = false;
+            panelErrorMessage.Visible = false;
         }
         #endregion
 
@@ -646,6 +672,7 @@ namespace Bitvain
                 {
                     return;
                 }
+                btnExit.Focus();
             }
             catch (WebException ex)
             {
@@ -714,10 +741,11 @@ namespace Bitvain
             btnCPUThreadsLess.Enabled = true;
         }
 
-        private void comboBoxAddressType_OnSelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxAddressType_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxAddressType.SelectedIndex == 0) // legacy P2PKH (1 prefix)
+            if (comboBoxAddressType.SelectedIndex == 0) // legacy P2PKH (1 prefix) base58
             {
+                comboBoxCaseSensitive.Enabled = true;
                 lblExamplePrefix.Invoke((MethodInvoker)delegate
                 {
                     lblExamplePrefix.Text = "1";
@@ -725,13 +753,14 @@ namespace Bitvain
                 addressType = ScriptPubKeyType.Legacy;
                 addressPrefixLength = 1;
                 totalAddressLength = 34;
-                exampleAddressWithoutPrefix = "Gxp4vRoCGJym3xR7yCVPFHoCNxv4Twseo";
+                exampleAddressWithoutPrefix = "BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2";
                 disallowedCharacters = new List<char> { '0', 'O', 'I', 'l' };
-                disallowedCharsErrorMessage = "O, 0, I && l (capital o, zero, capital i, lower L) are invalid";
+                disallowedCharsErrorMessage = "Legacy: O (upper o), 0 (zero), I (upper i) && l (lower L) are invalid characters";
             }
 
-            if (comboBoxAddressType.SelectedIndex == 1) // segwitP2SH (3 prefix)
+            if (comboBoxAddressType.SelectedIndex == 1) // segwitP2SH (3 prefix) base58
             {
+                comboBoxCaseSensitive.Enabled = true;
                 lblExamplePrefix.Invoke((MethodInvoker)delegate
                 {
                     lblExamplePrefix.Text = "3";
@@ -741,14 +770,48 @@ namespace Bitvain
                 totalAddressLength = 34;
                 exampleAddressWithoutPrefix = "BpNv8kWhGqjiKysyaADpsdrFABNqZhdCE";
                 disallowedCharacters = new List<char> { '0', 'O', 'I', 'l' };
-                disallowedCharsErrorMessage = "O, 0, I && l (capital o, zero, capital i, lower L) are invalid";
+                disallowedCharsErrorMessage = "SegwitP2SH: O (upper o), 0 (zero), I (upper i) && l (lower L) are invalid characters";
+            }
+
+            if (comboBoxAddressType.SelectedIndex == 2) // segwit (bc1q prefix) bech32
+            {
+                comboBoxCaseSensitive.SelectedIndex = 0;
+                comboBoxCaseSensitive.Enabled = false;
+                textBoxTargetString.Text = textBoxTargetString.Text.ToLower();
+                lblExamplePrefix.Invoke((MethodInvoker)delegate
+                {
+                    lblExamplePrefix.Text = "bc1q";
+                });
+                addressType = ScriptPubKeyType.Segwit;
+                addressPrefixLength = 4;
+                totalAddressLength = 42;
+                exampleAddressWithoutPrefix = "ar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq";
+                disallowedCharacters = new List<char> { 'b', 'i', 'o', 'l', 'O', 'B', 'I', 'L' }; // nb the caps get translated to lower-case so they need disallowing too
+                disallowedCharsErrorMessage = "Segwit: b, i, o (lower O) && l (lower L) are invalid characters";
+            }
+
+            if (comboBoxAddressType.SelectedIndex == 3) // taproot (bc1p prefix) bech32
+            {
+                comboBoxCaseSensitive.SelectedIndex = 0;
+                comboBoxCaseSensitive.Enabled = false;
+                textBoxTargetString.Text = textBoxTargetString.Text.ToLower();
+                lblExamplePrefix.Invoke((MethodInvoker)delegate
+                {
+                    lblExamplePrefix.Text = "bc1p";
+                });
+                addressType = ScriptPubKeyType.TaprootBIP86;
+                addressPrefixLength = 4;
+                totalAddressLength = 62;
+                exampleAddressWithoutPrefix = "0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqzk5jj0";
+                disallowedCharacters = new List<char> { 'b', 'i', 'o', 'l', 'O', 'B', 'I', 'L' }; // nb the caps get translated to lower-case so they need disallowing too
+                disallowedCharsErrorMessage = "Taproot: b, i, o (lower O) && l (lower L) are invalid characters";
             }
 
             RecalculateDifficulty();
             ConstructExample();
         }
 
-        private void btnCopyAddress_Click(object sender, EventArgs e)
+        private void BtnCopyAddress_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(lblGeneratedAddress.Text);
             lblCopied.Location = new Point(btnCopyAddress.Location.X + btnCopyAddress.Width, label7.Location.Y);
@@ -756,7 +819,7 @@ namespace Bitvain
             timerHideCopiedMessage.Start();
         }
 
-        private void btnCopyPrivateKey_Click(object sender, EventArgs e)
+        private void BtnCopyPrivateKey_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(lblGeneratedPrivateKey.Text);
             lblCopied.Location = new Point(btnCopyPrivateKey.Location.X + btnCopyPrivateKey.Width, label8.Location.Y);
@@ -764,10 +827,27 @@ namespace Bitvain
             timerHideCopiedMessage.Start();
         }
 
-        private void timerHideCopiedMessage_Tick(object sender, EventArgs e)
+        private void TimerHideCopiedMessage_Tick(object sender, EventArgs e)
         {
             timerHideCopiedMessage.Stop();
             lblCopied.Visible = false;
+        }
+
+        private void Copy_MouseUp(object sender, MouseEventArgs e)
+        {
+            btnMoveWindow.Focus();
+        }
+
+        private void timerCompletedMessage_Tick(object sender, EventArgs e)
+        {
+            if (lblCompleted.Visible)
+            {  
+                lblCompleted.Visible = false; 
+            }
+            else
+            {
+                lblCompleted.Visible = true; 
+            }
         }
     }
 }

@@ -32,26 +32,29 @@ namespace Bitvain
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Bitvain));
-            pictureBox1 = new PictureBox();
             btnExit = new CustomControls.RJControls.RJButton();
             panelInputs = new Panel();
+            panelErrorMessage = new Panel();
             panel1 = new Panel();
+            lblErrorMessage = new Label();
+            label13 = new Label();
+            panelAddressTypeContainer = new Panel();
             comboBoxAddressType = new CustomControls.RJControls.RJComboBox();
-            label12 = new Label();
             btnCPUThreadsMore = new CustomControls.RJControls.RJButton();
             btnCPUThreadsLess = new CustomControls.RJControls.RJButton();
+            label12 = new Label();
             lblCPUThreads = new Label();
             label11 = new Label();
             lblExampleAddressPart2 = new Label();
-            lblExampleTarget = new Label();
-            lblExampleAddressPart1 = new Label();
             panelTargetPositionContainer = new Panel();
             comboBoxTargetPosition = new CustomControls.RJControls.RJComboBox();
             label5 = new Label();
-            lblExamplePrefix = new Label();
-            label4 = new Label();
+            lblExampleTarget = new Label();
             lblDifficultyFormula = new Label();
+            label4 = new Label();
+            lblExampleAddressPart1 = new Label();
             label3 = new Label();
+            lblExamplePrefix = new Label();
             panelCaseSensitiveContainer = new Panel();
             comboBoxCaseSensitive = new CustomControls.RJControls.RJComboBox();
             lblDifficulty = new Label();
@@ -78,11 +81,13 @@ namespace Bitvain
             label6 = new Label();
             timerHideErrorMessage = new System.Windows.Forms.Timer(components);
             btnMoveWindow = new CustomControls.RJControls.RJButton();
-            lblErrorMessage = new Label();
             timerHideCopiedMessage = new System.Windows.Forms.Timer(components);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            timerCompletedMessage = new System.Windows.Forms.Timer(components);
+            lblCompleted = new Label();
             panelInputs.SuspendLayout();
+            panelErrorMessage.SuspendLayout();
             panel1.SuspendLayout();
+            panelAddressTypeContainer.SuspendLayout();
             panelTargetPositionContainer.SuspendLayout();
             panelCaseSensitiveContainer.SuspendLayout();
             panelInputStringContainer.SuspendLayout();
@@ -90,32 +95,18 @@ namespace Bitvain
             panelStatus.SuspendLayout();
             SuspendLayout();
             // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = Color.FromArgb(19, 22, 31);
-            pictureBox1.BackgroundImage = Resources.logo;
-            pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Location = new Point(12, 5);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(273, 102);
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += BtnMoveWindow_Click;
-            pictureBox1.MouseDown += BtnMoveWindow_MouseDown;
-            pictureBox1.MouseUp += BtnMoveWindow_MouseUp;
-            // 
             // btnExit
             // 
             btnExit.BackColor = Color.FromArgb(62, 72, 91);
             btnExit.BackgroundColor = Color.FromArgb(62, 72, 91);
-            btnExit.BorderColor = Color.PaleVioletRed;
+            btnExit.BorderColor = Color.FromArgb(19, 22, 31);
             btnExit.BorderRadius = 12;
             btnExit.BorderSize = 0;
             btnExit.FlatAppearance.BorderSize = 0;
             btnExit.FlatStyle = FlatStyle.Flat;
             btnExit.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnExit.ForeColor = Color.White;
-            btnExit.Location = new Point(623, 10);
+            btnExit.Location = new Point(623, 12);
             btnExit.Name = "btnExit";
             btnExit.Padding = new Padding(2, 2, 0, 0);
             btnExit.Size = new Size(24, 24);
@@ -128,21 +119,22 @@ namespace Bitvain
             // panelInputs
             // 
             panelInputs.BackColor = Color.FromArgb(13, 16, 24);
-            panelInputs.Controls.Add(panel1);
-            panelInputs.Controls.Add(label12);
+            panelInputs.Controls.Add(panelErrorMessage);
+            panelInputs.Controls.Add(panelAddressTypeContainer);
             panelInputs.Controls.Add(btnCPUThreadsMore);
             panelInputs.Controls.Add(btnCPUThreadsLess);
+            panelInputs.Controls.Add(label12);
             panelInputs.Controls.Add(lblCPUThreads);
             panelInputs.Controls.Add(label11);
             panelInputs.Controls.Add(lblExampleAddressPart2);
-            panelInputs.Controls.Add(lblExampleTarget);
-            panelInputs.Controls.Add(lblExampleAddressPart1);
             panelInputs.Controls.Add(panelTargetPositionContainer);
             panelInputs.Controls.Add(label5);
-            panelInputs.Controls.Add(lblExamplePrefix);
-            panelInputs.Controls.Add(label4);
+            panelInputs.Controls.Add(lblExampleTarget);
             panelInputs.Controls.Add(lblDifficultyFormula);
+            panelInputs.Controls.Add(label4);
+            panelInputs.Controls.Add(lblExampleAddressPart1);
             panelInputs.Controls.Add(label3);
+            panelInputs.Controls.Add(lblExamplePrefix);
             panelInputs.Controls.Add(panelCaseSensitiveContainer);
             panelInputs.Controls.Add(lblDifficulty);
             panelInputs.Controls.Add(label2);
@@ -151,49 +143,82 @@ namespace Bitvain
             panelInputs.Controls.Add(btnGenerate);
             panelInputs.Location = new Point(12, 110);
             panelInputs.Name = "panelInputs";
-            panelInputs.Size = new Size(632, 148);
+            panelInputs.Size = new Size(635, 182);
             panelInputs.TabIndex = 3;
+            // 
+            // panelErrorMessage
+            // 
+            panelErrorMessage.BackColor = Color.FromArgb(52, 62, 81);
+            panelErrorMessage.Controls.Add(panel1);
+            panelErrorMessage.Location = new Point(14, 148);
+            panelErrorMessage.Name = "panelErrorMessage";
+            panelErrorMessage.Size = new Size(530, 24);
+            panelErrorMessage.TabIndex = 24;
+            panelErrorMessage.Visible = false;
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(24, 27, 36);
-            panel1.Controls.Add(comboBoxAddressType);
-            panel1.Location = new Point(113, 12);
+            panel1.BackColor = Color.FromArgb(8, 11, 19);
+            panel1.Controls.Add(lblErrorMessage);
+            panel1.Controls.Add(label13);
+            panel1.Location = new Point(1, 1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(188, 24);
-            panel1.TabIndex = 23;
+            panel1.Size = new Size(528, 22);
+            panel1.TabIndex = 10;
+            // 
+            // lblErrorMessage
+            // 
+            lblErrorMessage.AutoSize = true;
+            lblErrorMessage.Font = new Font("Segoe UI", 10F);
+            lblErrorMessage.ForeColor = Color.FromArgb(127, 137, 163);
+            lblErrorMessage.Location = new Point(35, 0);
+            lblErrorMessage.Name = "lblErrorMessage";
+            lblErrorMessage.Size = new Size(96, 19);
+            lblErrorMessage.TabIndex = 5;
+            lblErrorMessage.Text = "Error message";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 10F);
+            label13.ForeColor = Color.IndianRed;
+            label13.Location = new Point(5, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(28, 19);
+            label13.TabIndex = 9;
+            label13.Text = "⚠️";
+            // 
+            // panelAddressTypeContainer
+            // 
+            panelAddressTypeContainer.BackColor = Color.FromArgb(24, 27, 36);
+            panelAddressTypeContainer.Controls.Add(comboBoxAddressType);
+            panelAddressTypeContainer.Location = new Point(380, 12);
+            panelAddressTypeContainer.Name = "panelAddressTypeContainer";
+            panelAddressTypeContainer.Size = new Size(217, 24);
+            panelAddressTypeContainer.TabIndex = 23;
             // 
             // comboBoxAddressType
             // 
-            comboBoxAddressType.BackColor = Color.FromArgb(24, 27, 36);
-            comboBoxAddressType.BorderColor = Color.MediumSlateBlue;
+            comboBoxAddressType.BackColor = Color.Transparent;
+            comboBoxAddressType.BackgroundImage = Resources.dropdownAddressType1;
+            comboBoxAddressType.BackgroundImageLayout = ImageLayout.Stretch;
+            comboBoxAddressType.BorderColor = Color.FromArgb(24, 27, 36);
             comboBoxAddressType.BorderSize = 0;
             comboBoxAddressType.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAddressType.Font = new Font("Segoe UI", 10F);
             comboBoxAddressType.ForeColor = Color.LightGray;
             comboBoxAddressType.IconColor = Color.White;
-            comboBoxAddressType.Items.AddRange(new object[] { "Legacy P2PKH (prefix 1)", "SegwitP2SH (prefix 3)" });
+            comboBoxAddressType.Items.AddRange(new object[] { "Legacy P2PKH (prefix 1)", "SegwitP2SH (prefix 3)", "Native segwit (prefix bc1q)", "Taproot P2TR (prefix bc1p)" });
             comboBoxAddressType.ListBackColor = Color.FromArgb(24, 27, 36);
             comboBoxAddressType.ListTextColor = Color.White;
             comboBoxAddressType.Location = new Point(10, 1);
-            comboBoxAddressType.MaximumSize = new Size(168, 23);
-            comboBoxAddressType.MinimumSize = new Size(168, 23);
+            comboBoxAddressType.MaximumSize = new Size(197, 22);
+            comboBoxAddressType.MinimumSize = new Size(197, 22);
             comboBoxAddressType.Name = "comboBoxAddressType";
-            comboBoxAddressType.Size = new Size(168, 23);
+            comboBoxAddressType.Size = new Size(197, 22);
             comboBoxAddressType.TabIndex = 10;
             comboBoxAddressType.Texts = "Legacy P2PKH (prefix 1)";
-            comboBoxAddressType.OnSelectedIndexChanged += comboBoxAddressType_OnSelectedIndexChanged;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 10F);
-            label12.ForeColor = Color.FromArgb(127, 137, 163);
-            label12.Location = new Point(14, 13);
-            label12.Name = "label12";
-            label12.Size = new Size(89, 19);
-            label12.TabIndex = 22;
-            label12.Text = "Address type";
+            comboBoxAddressType.OnSelectedIndexChanged += ComboBoxAddressType_OnSelectedIndexChanged;
             // 
             // btnCPUThreadsMore
             // 
@@ -208,7 +233,7 @@ namespace Bitvain
             btnCPUThreadsMore.FlatStyle = FlatStyle.Flat;
             btnCPUThreadsMore.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
             btnCPUThreadsMore.ForeColor = Color.FromArgb(62, 72, 91);
-            btnCPUThreadsMore.Location = new Point(260, 78);
+            btnCPUThreadsMore.Location = new Point(260, 112);
             btnCPUThreadsMore.Name = "btnCPUThreadsMore";
             btnCPUThreadsMore.Padding = new Padding(2, 2, 0, 0);
             btnCPUThreadsMore.Size = new Size(24, 24);
@@ -231,7 +256,7 @@ namespace Bitvain
             btnCPUThreadsLess.FlatStyle = FlatStyle.Flat;
             btnCPUThreadsLess.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
             btnCPUThreadsLess.ForeColor = Color.FromArgb(62, 72, 91);
-            btnCPUThreadsLess.Location = new Point(222, 78);
+            btnCPUThreadsLess.Location = new Point(222, 112);
             btnCPUThreadsLess.Name = "btnCPUThreadsLess";
             btnCPUThreadsLess.Padding = new Padding(2, 2, 0, 0);
             btnCPUThreadsLess.Size = new Size(24, 24);
@@ -241,12 +266,23 @@ namespace Bitvain
             btnCPUThreadsLess.UseVisualStyleBackColor = false;
             btnCPUThreadsLess.Click += BtnCPUThreadsLess_Click;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 10F);
+            label12.ForeColor = Color.FromArgb(127, 137, 163);
+            label12.Location = new Point(281, 13);
+            label12.Name = "label12";
+            label12.Size = new Size(89, 19);
+            label12.TabIndex = 22;
+            label12.Text = "Address type";
+            // 
             // lblCPUThreads
             // 
             lblCPUThreads.AutoSize = true;
             lblCPUThreads.Font = new Font("Segoe UI", 10F);
             lblCPUThreads.ForeColor = Color.FromArgb(148, 84, 5);
-            lblCPUThreads.Location = new Point(241, 81);
+            lblCPUThreads.Location = new Point(241, 115);
             lblCPUThreads.Name = "lblCPUThreads";
             lblCPUThreads.Size = new Size(25, 19);
             lblCPUThreads.TabIndex = 19;
@@ -257,7 +293,7 @@ namespace Bitvain
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 10F);
             label11.ForeColor = Color.FromArgb(127, 137, 163);
-            label11.Location = new Point(14, 81);
+            label11.Location = new Point(14, 115);
             label11.Name = "label11";
             label11.Size = new Size(206, 19);
             label11.TabIndex = 18;
@@ -268,7 +304,7 @@ namespace Bitvain
             lblExampleAddressPart2.AutoSize = true;
             lblExampleAddressPart2.Font = new Font("Consolas", 11.25F);
             lblExampleAddressPart2.ForeColor = Color.FromArgb(148, 84, 5);
-            lblExampleAddressPart2.Location = new Point(420, 116);
+            lblExampleAddressPart2.Location = new Point(420, 82);
             lblExampleAddressPart2.Margin = new Padding(0);
             lblExampleAddressPart2.Name = "lblExampleAddressPart2";
             lblExampleAddressPart2.Size = new Size(16, 18);
@@ -276,44 +312,21 @@ namespace Bitvain
             lblExampleAddressPart2.Text = "X";
             lblExampleAddressPart2.Visible = false;
             // 
-            // lblExampleTarget
-            // 
-            lblExampleTarget.AutoSize = true;
-            lblExampleTarget.Font = new Font("Consolas", 11.25F);
-            lblExampleTarget.ForeColor = Color.FromArgb(247, 147, 26);
-            lblExampleTarget.Location = new Point(93, 116);
-            lblExampleTarget.Margin = new Padding(0);
-            lblExampleTarget.Name = "lblExampleTarget";
-            lblExampleTarget.Size = new Size(56, 18);
-            lblExampleTarget.TabIndex = 16;
-            lblExampleTarget.Text = "vAniTy";
-            // 
-            // lblExampleAddressPart1
-            // 
-            lblExampleAddressPart1.AutoSize = true;
-            lblExampleAddressPart1.Font = new Font("Consolas", 11.25F);
-            lblExampleAddressPart1.ForeColor = Color.FromArgb(148, 84, 5);
-            lblExampleAddressPart1.Location = new Point(143, 116);
-            lblExampleAddressPart1.Margin = new Padding(0);
-            lblExampleAddressPart1.Name = "lblExampleAddressPart1";
-            lblExampleAddressPart1.Size = new Size(272, 18);
-            lblExampleAddressPart1.TabIndex = 15;
-            lblExampleAddressPart1.Text = "Gxp4vRoCGJym3xR7yCVPFHoCNxv4Twseo";
-            // 
             // panelTargetPositionContainer
             // 
             panelTargetPositionContainer.BackColor = Color.FromArgb(24, 27, 36);
             panelTargetPositionContainer.Controls.Add(comboBoxTargetPosition);
             panelTargetPositionContainer.Location = new Point(264, 46);
             panelTargetPositionContainer.Name = "panelTargetPositionContainer";
-            panelTargetPositionContainer.Size = new Size(88, 24);
+            panelTargetPositionContainer.Size = new Size(130, 24);
             panelTargetPositionContainer.TabIndex = 11;
             // 
             // comboBoxTargetPosition
             // 
             comboBoxTargetPosition.AutoSize = true;
-            comboBoxTargetPosition.BackColor = Color.FromArgb(24, 27, 36);
-            comboBoxTargetPosition.BorderColor = Color.MediumSlateBlue;
+            comboBoxTargetPosition.BackColor = Color.Transparent;
+            comboBoxTargetPosition.BackgroundImage = Resources.dropdownPosition;
+            comboBoxTargetPosition.BorderColor = Color.FromArgb(24, 27, 36);
             comboBoxTargetPosition.BorderSize = 0;
             comboBoxTargetPosition.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxTargetPosition.Font = new Font("Segoe UI", 10F);
@@ -322,11 +335,11 @@ namespace Bitvain
             comboBoxTargetPosition.Items.AddRange(new object[] { "after prefix", "anywhere", "suffix" });
             comboBoxTargetPosition.ListBackColor = Color.FromArgb(24, 27, 36);
             comboBoxTargetPosition.ListTextColor = Color.White;
-            comboBoxTargetPosition.Location = new Point(0, 1);
-            comboBoxTargetPosition.MaximumSize = new Size(84, 22);
-            comboBoxTargetPosition.MinimumSize = new Size(84, 22);
+            comboBoxTargetPosition.Location = new Point(10, 1);
+            comboBoxTargetPosition.MaximumSize = new Size(110, 22);
+            comboBoxTargetPosition.MinimumSize = new Size(110, 22);
             comboBoxTargetPosition.Name = "comboBoxTargetPosition";
-            comboBoxTargetPosition.Size = new Size(84, 22);
+            comboBoxTargetPosition.Size = new Size(110, 22);
             comboBoxTargetPosition.TabIndex = 10;
             comboBoxTargetPosition.Texts = "after prefix";
             comboBoxTargetPosition.OnSelectedIndexChanged += ComboBoxTargetPosition_OnSelectedIndexChanged;
@@ -342,39 +355,51 @@ namespace Bitvain
             label5.TabIndex = 10;
             label5.Text = "Position";
             // 
-            // lblExamplePrefix
+            // lblExampleTarget
             // 
-            lblExamplePrefix.AutoSize = true;
-            lblExamplePrefix.Font = new Font("Consolas", 11.25F);
-            lblExamplePrefix.ForeColor = Color.FromArgb(148, 84, 5);
-            lblExamplePrefix.Location = new Point(84, 116);
-            lblExamplePrefix.Margin = new Padding(0);
-            lblExamplePrefix.Name = "lblExamplePrefix";
-            lblExamplePrefix.Size = new Size(16, 18);
-            lblExamplePrefix.TabIndex = 14;
-            lblExamplePrefix.Text = "1";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 10F);
-            label4.ForeColor = Color.FromArgb(127, 137, 163);
-            label4.Location = new Point(14, 115);
-            label4.Name = "label4";
-            label4.Size = new Size(59, 19);
-            label4.TabIndex = 13;
-            label4.Text = "Example";
+            lblExampleTarget.AutoSize = true;
+            lblExampleTarget.Font = new Font("Consolas", 11.25F);
+            lblExampleTarget.ForeColor = Color.FromArgb(247, 147, 26);
+            lblExampleTarget.Location = new Point(93, 82);
+            lblExampleTarget.Margin = new Padding(0);
+            lblExampleTarget.Name = "lblExampleTarget";
+            lblExampleTarget.Size = new Size(56, 18);
+            lblExampleTarget.TabIndex = 16;
+            lblExampleTarget.Text = "vAniTy";
             // 
             // lblDifficultyFormula
             // 
             lblDifficultyFormula.AutoSize = true;
             lblDifficultyFormula.Font = new Font("Segoe UI", 10F);
             lblDifficultyFormula.ForeColor = Color.FromArgb(148, 84, 5);
-            lblDifficultyFormula.Location = new Point(373, 81);
+            lblDifficultyFormula.Location = new Point(373, 115);
             lblDifficultyFormula.Name = "lblDifficultyFormula";
             lblDifficultyFormula.Size = new Size(21, 19);
             lblDifficultyFormula.TabIndex = 12;
             lblDifficultyFormula.Text = "( )";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10F);
+            label4.ForeColor = Color.FromArgb(127, 137, 163);
+            label4.Location = new Point(14, 81);
+            label4.Name = "label4";
+            label4.Size = new Size(59, 19);
+            label4.TabIndex = 13;
+            label4.Text = "Example";
+            // 
+            // lblExampleAddressPart1
+            // 
+            lblExampleAddressPart1.AutoSize = true;
+            lblExampleAddressPart1.Font = new Font("Consolas", 11.25F);
+            lblExampleAddressPart1.ForeColor = Color.FromArgb(148, 84, 5);
+            lblExampleAddressPart1.Location = new Point(143, 82);
+            lblExampleAddressPart1.Margin = new Padding(0);
+            lblExampleAddressPart1.Name = "lblExampleAddressPart1";
+            lblExampleAddressPart1.Size = new Size(272, 18);
+            lblExampleAddressPart1.TabIndex = 15;
+            lblExampleAddressPart1.Text = "Gxp4vRoCGJym3xR7yCVPFHoCNxv4Twseo";
             // 
             // label3
             // 
@@ -387,19 +412,32 @@ namespace Bitvain
             label3.TabIndex = 9;
             label3.Text = "Case sensitive";
             // 
+            // lblExamplePrefix
+            // 
+            lblExamplePrefix.AutoSize = true;
+            lblExamplePrefix.Font = new Font("Consolas", 11.25F);
+            lblExamplePrefix.ForeColor = Color.FromArgb(148, 84, 5);
+            lblExamplePrefix.Location = new Point(84, 82);
+            lblExamplePrefix.Margin = new Padding(0);
+            lblExamplePrefix.Name = "lblExamplePrefix";
+            lblExamplePrefix.Size = new Size(16, 18);
+            lblExamplePrefix.TabIndex = 14;
+            lblExamplePrefix.Text = "1";
+            // 
             // panelCaseSensitiveContainer
             // 
             panelCaseSensitiveContainer.BackColor = Color.FromArgb(24, 27, 36);
             panelCaseSensitiveContainer.Controls.Add(comboBoxCaseSensitive);
             panelCaseSensitiveContainer.Location = new Point(114, 46);
             panelCaseSensitiveContainer.Name = "panelCaseSensitiveContainer";
-            panelCaseSensitiveContainer.Size = new Size(50, 24);
+            panelCaseSensitiveContainer.Size = new Size(69, 24);
             panelCaseSensitiveContainer.TabIndex = 6;
             // 
             // comboBoxCaseSensitive
             // 
-            comboBoxCaseSensitive.BackColor = Color.FromArgb(24, 27, 36);
-            comboBoxCaseSensitive.BorderColor = Color.MediumSlateBlue;
+            comboBoxCaseSensitive.BackColor = Color.Transparent;
+            comboBoxCaseSensitive.BackgroundImage = Resources.dropdownCaseSensitive;
+            comboBoxCaseSensitive.BorderColor = Color.FromArgb(24, 27, 36);
             comboBoxCaseSensitive.BorderSize = 0;
             comboBoxCaseSensitive.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxCaseSensitive.Font = new Font("Segoe UI", 10F);
@@ -409,10 +447,10 @@ namespace Bitvain
             comboBoxCaseSensitive.ListBackColor = Color.FromArgb(24, 27, 36);
             comboBoxCaseSensitive.ListTextColor = Color.White;
             comboBoxCaseSensitive.Location = new Point(10, 1);
-            comboBoxCaseSensitive.MaximumSize = new Size(30, 22);
-            comboBoxCaseSensitive.MinimumSize = new Size(20, 22);
+            comboBoxCaseSensitive.MaximumSize = new Size(49, 22);
+            comboBoxCaseSensitive.MinimumSize = new Size(49, 22);
             comboBoxCaseSensitive.Name = "comboBoxCaseSensitive";
-            comboBoxCaseSensitive.Size = new Size(30, 22);
+            comboBoxCaseSensitive.Size = new Size(49, 22);
             comboBoxCaseSensitive.TabIndex = 10;
             comboBoxCaseSensitive.Texts = "N";
             comboBoxCaseSensitive.OnSelectedIndexChanged += ComboBoxCaseSensitive_OnSelectedIndexChanged;
@@ -422,7 +460,7 @@ namespace Bitvain
             lblDifficulty.AutoSize = true;
             lblDifficulty.Font = new Font("Segoe UI", 10F);
             lblDifficulty.ForeColor = Color.FromArgb(148, 84, 5);
-            lblDifficulty.Location = new Point(350, 81);
+            lblDifficulty.Location = new Point(350, 115);
             lblDifficulty.Name = "lblDifficulty";
             lblDifficulty.Size = new Size(17, 19);
             lblDifficulty.TabIndex = 8;
@@ -433,7 +471,7 @@ namespace Bitvain
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F);
             label2.ForeColor = Color.FromArgb(127, 137, 163);
-            label2.Location = new Point(290, 81);
+            label2.Location = new Point(290, 115);
             label2.Name = "label2";
             label2.Size = new Size(62, 19);
             label2.TabIndex = 7;
@@ -444,7 +482,7 @@ namespace Bitvain
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F);
             label1.ForeColor = Color.FromArgb(127, 137, 163);
-            label1.Location = new Point(317, 13);
+            label1.Location = new Point(14, 13);
             label1.Name = "label1";
             label1.Size = new Size(86, 19);
             label1.TabIndex = 6;
@@ -454,7 +492,7 @@ namespace Bitvain
             // 
             panelInputStringContainer.BackColor = Color.FromArgb(24, 27, 36);
             panelInputStringContainer.Controls.Add(textBoxTargetString);
-            panelInputStringContainer.Location = new Point(406, 12);
+            panelInputStringContainer.Location = new Point(103, 12);
             panelInputStringContainer.Name = "panelInputStringContainer";
             panelInputStringContainer.Size = new Size(130, 24);
             panelInputStringContainer.TabIndex = 5;
@@ -485,7 +523,7 @@ namespace Bitvain
             btnGenerate.FlatStyle = FlatStyle.Flat;
             btnGenerate.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnGenerate.ForeColor = Color.White;
-            btnGenerate.Location = new Point(555, 116);
+            btnGenerate.Location = new Point(558, 148);
             btnGenerate.Name = "btnGenerate";
             btnGenerate.Size = new Size(71, 24);
             btnGenerate.TabIndex = 3;
@@ -504,9 +542,9 @@ namespace Bitvain
             panelResults.Controls.Add(lblGeneratedAddress);
             panelResults.Controls.Add(label8);
             panelResults.Controls.Add(label7);
-            panelResults.Location = new Point(12, 357);
+            panelResults.Location = new Point(12, 391);
             panelResults.Name = "panelResults";
-            panelResults.Size = new Size(632, 84);
+            panelResults.Size = new Size(635, 84);
             panelResults.TabIndex = 4;
             // 
             // lblCopied
@@ -543,7 +581,8 @@ namespace Bitvain
             btnCopyPrivateKey.TextColor = Color.White;
             btnCopyPrivateKey.UseVisualStyleBackColor = false;
             btnCopyPrivateKey.Visible = false;
-            btnCopyPrivateKey.Click += btnCopyPrivateKey_Click;
+            btnCopyPrivateKey.Click += BtnCopyPrivateKey_Click;
+            btnCopyPrivateKey.MouseUp += Copy_MouseUp;
             // 
             // btnCopyAddress
             // 
@@ -567,7 +606,8 @@ namespace Bitvain
             btnCopyAddress.TextColor = Color.White;
             btnCopyAddress.UseVisualStyleBackColor = false;
             btnCopyAddress.Visible = false;
-            btnCopyAddress.Click += btnCopyAddress_Click;
+            btnCopyAddress.Click += BtnCopyAddress_Click;
+            btnCopyAddress.MouseUp += Copy_MouseUp;
             // 
             // lblGeneratedPrivateKey
             // 
@@ -625,9 +665,9 @@ namespace Bitvain
             panelStatus.Controls.Add(btnCancel);
             panelStatus.Controls.Add(lblAddressesGenerated);
             panelStatus.Controls.Add(label6);
-            panelStatus.Location = new Point(12, 268);
+            panelStatus.Location = new Point(12, 302);
             panelStatus.Name = "panelStatus";
-            panelStatus.Size = new Size(632, 79);
+            panelStatus.Size = new Size(635, 79);
             panelStatus.TabIndex = 4;
             // 
             // lblTimeElapsed
@@ -635,7 +675,7 @@ namespace Bitvain
             lblTimeElapsed.AutoSize = true;
             lblTimeElapsed.Font = new Font("Segoe UI", 10F);
             lblTimeElapsed.ForeColor = Color.FromArgb(148, 84, 5);
-            lblTimeElapsed.Location = new Point(330, 13);
+            lblTimeElapsed.Location = new Point(355, 13);
             lblTimeElapsed.Name = "lblTimeElapsed";
             lblTimeElapsed.Size = new Size(15, 19);
             lblTimeElapsed.TabIndex = 18;
@@ -646,7 +686,7 @@ namespace Bitvain
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 10F);
             label10.ForeColor = Color.FromArgb(127, 137, 163);
-            label10.Location = new Point(236, 13);
+            label10.Location = new Point(261, 13);
             label10.Name = "label10";
             label10.Size = new Size(88, 19);
             label10.TabIndex = 15;
@@ -686,7 +726,7 @@ namespace Bitvain
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(555, 47);
+            btnCancel.Location = new Point(558, 47);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(71, 24);
             btnCancel.TabIndex = 12;
@@ -734,10 +774,10 @@ namespace Bitvain
             btnMoveWindow.FlatStyle = FlatStyle.Flat;
             btnMoveWindow.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMoveWindow.ForeColor = Color.FromArgb(13, 16, 24);
-            btnMoveWindow.Location = new Point(291, 2);
+            btnMoveWindow.Location = new Point(-5, -16);
             btnMoveWindow.Name = "btnMoveWindow";
             btnMoveWindow.Padding = new Padding(2, 2, 0, 0);
-            btnMoveWindow.Size = new Size(366, 105);
+            btnMoveWindow.Size = new Size(674, 519);
             btnMoveWindow.TabIndex = 10;
             btnMoveWindow.TabStop = false;
             btnMoveWindow.TextColor = Color.FromArgb(13, 16, 24);
@@ -746,37 +786,44 @@ namespace Bitvain
             btnMoveWindow.MouseDown += BtnMoveWindow_MouseDown;
             btnMoveWindow.MouseUp += BtnMoveWindow_MouseUp;
             // 
-            // lblErrorMessage
-            // 
-            lblErrorMessage.AutoSize = true;
-            lblErrorMessage.Font = new Font("Segoe UI", 8F);
-            lblErrorMessage.ForeColor = Color.FromArgb(148, 84, 5);
-            lblErrorMessage.Location = new Point(12, 440);
-            lblErrorMessage.Name = "lblErrorMessage";
-            lblErrorMessage.Size = new Size(79, 13);
-            lblErrorMessage.TabIndex = 5;
-            lblErrorMessage.Text = "Error message";
-            lblErrorMessage.Visible = false;
-            // 
             // timerHideCopiedMessage
             // 
             timerHideCopiedMessage.Interval = 2000;
-            timerHideCopiedMessage.Tick += timerHideCopiedMessage_Tick;
+            timerHideCopiedMessage.Tick += TimerHideCopiedMessage_Tick;
+            // 
+            // timerCompletedMessage
+            // 
+            timerCompletedMessage.Interval = 1000;
+            timerCompletedMessage.Tick += timerCompletedMessage_Tick;
+            // 
+            // lblCompleted
+            // 
+            lblCompleted.AutoSize = true;
+            lblCompleted.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCompleted.ForeColor = Color.FromArgb(247, 147, 26);
+            lblCompleted.Location = new Point(562, 90);
+            lblCompleted.Name = "lblCompleted";
+            lblCompleted.Size = new Size(85, 17);
+            lblCompleted.TabIndex = 25;
+            lblCompleted.Text = "COMPLETED";
+            lblCompleted.Visible = false;
             // 
             // Bitvain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(19, 22, 31);
+            BackgroundImage = Resources.AppBG;
+            BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnExit;
-            ClientSize = new Size(656, 456);
+            ClientSize = new Size(662, 490);
+            Controls.Add(lblCompleted);
+            Controls.Add(panelInputs);
             Controls.Add(btnExit);
-            Controls.Add(btnMoveWindow);
-            Controls.Add(lblErrorMessage);
             Controls.Add(panelResults);
             Controls.Add(panelStatus);
-            Controls.Add(panelInputs);
-            Controls.Add(pictureBox1);
+            Controls.Add(btnMoveWindow);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Bitvain";
@@ -784,10 +831,12 @@ namespace Bitvain
             Text = "Bitvain";
             Load += Bitvain_Load;
             Paint += Bitvain_Paint;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelInputs.ResumeLayout(false);
             panelInputs.PerformLayout();
+            panelErrorMessage.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panelAddressTypeContainer.ResumeLayout(false);
             panelTargetPositionContainer.ResumeLayout(false);
             panelTargetPositionContainer.PerformLayout();
             panelCaseSensitiveContainer.ResumeLayout(false);
@@ -804,7 +853,6 @@ namespace Bitvain
         #endregion
 
         private CustomControls.RJControls.RJButton btnExit;
-        private PictureBox pictureBox1;
         private Panel panelInputs;
         private Panel panelResults;
         private Panel panelStatus;
@@ -846,10 +894,15 @@ namespace Bitvain
         private CustomControls.RJControls.RJButton btnCPUThreadsLess;
         private Label lblCPUThreads;
         private CustomControls.RJControls.RJButton btnCopyPrivateKey;
-        private Panel panel1;
+        private Panel panelAddressTypeContainer;
         private CustomControls.RJControls.RJComboBox comboBoxAddressType;
         private Label label12;
         private Label lblCopied;
         private System.Windows.Forms.Timer timerHideCopiedMessage;
+        private Panel panelErrorMessage;
+        private Label label13;
+        private Panel panel1;
+        private System.Windows.Forms.Timer timerCompletedMessage;
+        private Label lblCompleted;
     }
 }

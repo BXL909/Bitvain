@@ -126,6 +126,18 @@
   <metadata name="timerCompletedMessage.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>386, 17</value>
   </metadata>
+  <metadata name="timerRepaintStuff.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>573, 17</value>
+  </metadata>
+  <data name="label14.Text" xml:space="preserve">
+    <value>Vanity address generation comes with inherent risks, so DO NOT use vanity addresses for storing significant amounts of bitcoin. Some of the risks can be mitigated to an extent, but it’s important to be cautious.
+Offline Use: Bitvain does not need internet access. All address generation happens locally on your machine. For added security, you can use Bitvain in a completely offline environment.
+Open Source: Bitvain is open-source software. You can review the code or even build it yourself to ensure its integrity, instead of relying on the provided installer.
+Private Key Security: Never store your private key on a computer or cloud service. The safest method is to store your private key in a physical, offline form.
+Address Reuse: For better privacy, it's best practice to avoid reusing addresses. With a vanity address, this isn't possible, unless you generate a new one for every transaction!
+
+The time it takes to generate a vanity address depends on how complex your chosen pattern is. For example, a difficulty value of 1,073,741,824 means it will take, on average, that many attempts to find a match. This is a matter of probability, so the process could be faster or slower than expected.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

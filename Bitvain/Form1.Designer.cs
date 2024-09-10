@@ -84,6 +84,13 @@ namespace Bitvain
             timerHideCopiedMessage = new System.Windows.Forms.Timer(components);
             timerCompletedMessage = new System.Windows.Forms.Timer(components);
             lblCompleted = new Label();
+            timerRepaintStuff = new System.Windows.Forms.Timer(components);
+            btnMinimise = new CustomControls.RJControls.RJButton();
+            btnAbout = new CustomControls.RJControls.RJButton();
+            panelHelp = new Panel();
+            btnCloseInfo = new CustomControls.RJControls.RJButton();
+            label14 = new Label();
+            rjButton1 = new CustomControls.RJControls.RJButton();
             panelInputs.SuspendLayout();
             panelErrorMessage.SuspendLayout();
             panel1.SuspendLayout();
@@ -93,6 +100,7 @@ namespace Bitvain
             panelInputStringContainer.SuspendLayout();
             panelResults.SuspendLayout();
             panelStatus.SuspendLayout();
+            panelHelp.SuspendLayout();
             SuspendLayout();
             // 
             // btnExit
@@ -110,7 +118,7 @@ namespace Bitvain
             btnExit.Name = "btnExit";
             btnExit.Padding = new Padding(2, 2, 0, 0);
             btnExit.Size = new Size(24, 24);
-            btnExit.TabIndex = 2;
+            btnExit.TabIndex = 4;
             btnExit.Text = "X";
             btnExit.TextColor = Color.White;
             btnExit.UseVisualStyleBackColor = false;
@@ -216,7 +224,7 @@ namespace Bitvain
             comboBoxAddressType.MinimumSize = new Size(197, 22);
             comboBoxAddressType.Name = "comboBoxAddressType";
             comboBoxAddressType.Size = new Size(197, 22);
-            comboBoxAddressType.TabIndex = 10;
+            comboBoxAddressType.TabIndex = 6;
             comboBoxAddressType.Texts = "Legacy P2PKH (prefix 1)";
             comboBoxAddressType.OnSelectedIndexChanged += ComboBoxAddressType_OnSelectedIndexChanged;
             // 
@@ -238,6 +246,7 @@ namespace Bitvain
             btnCPUThreadsMore.Padding = new Padding(2, 2, 0, 0);
             btnCPUThreadsMore.Size = new Size(24, 24);
             btnCPUThreadsMore.TabIndex = 21;
+            btnCPUThreadsMore.TabStop = false;
             btnCPUThreadsMore.Text = "▶";
             btnCPUThreadsMore.TextColor = Color.FromArgb(62, 72, 91);
             btnCPUThreadsMore.UseVisualStyleBackColor = false;
@@ -261,6 +270,7 @@ namespace Bitvain
             btnCPUThreadsLess.Padding = new Padding(2, 2, 0, 0);
             btnCPUThreadsLess.Size = new Size(24, 24);
             btnCPUThreadsLess.TabIndex = 20;
+            btnCPUThreadsLess.TabStop = false;
             btnCPUThreadsLess.Text = "◀";
             btnCPUThreadsLess.TextColor = Color.FromArgb(62, 72, 91);
             btnCPUThreadsLess.UseVisualStyleBackColor = false;
@@ -340,7 +350,7 @@ namespace Bitvain
             comboBoxTargetPosition.MinimumSize = new Size(110, 22);
             comboBoxTargetPosition.Name = "comboBoxTargetPosition";
             comboBoxTargetPosition.Size = new Size(110, 22);
-            comboBoxTargetPosition.TabIndex = 10;
+            comboBoxTargetPosition.TabIndex = 8;
             comboBoxTargetPosition.Texts = "after prefix";
             comboBoxTargetPosition.OnSelectedIndexChanged += ComboBoxTargetPosition_OnSelectedIndexChanged;
             // 
@@ -451,7 +461,7 @@ namespace Bitvain
             comboBoxCaseSensitive.MinimumSize = new Size(49, 22);
             comboBoxCaseSensitive.Name = "comboBoxCaseSensitive";
             comboBoxCaseSensitive.Size = new Size(49, 22);
-            comboBoxCaseSensitive.TabIndex = 10;
+            comboBoxCaseSensitive.TabIndex = 7;
             comboBoxCaseSensitive.Texts = "N";
             comboBoxCaseSensitive.OnSelectedIndexChanged += ComboBoxCaseSensitive_OnSelectedIndexChanged;
             // 
@@ -507,7 +517,7 @@ namespace Bitvain
             textBoxTargetString.MaxLength = 12;
             textBoxTargetString.Name = "textBoxTargetString";
             textBoxTargetString.Size = new Size(110, 18);
-            textBoxTargetString.TabIndex = 4;
+            textBoxTargetString.TabIndex = 5;
             textBoxTargetString.TextChanged += TextBoxTargetString_TextChanged;
             textBoxTargetString.KeyPress += TextBoxTargetString_KeyPress;
             // 
@@ -526,7 +536,7 @@ namespace Bitvain
             btnGenerate.Location = new Point(558, 148);
             btnGenerate.Name = "btnGenerate";
             btnGenerate.Size = new Size(71, 24);
-            btnGenerate.TabIndex = 3;
+            btnGenerate.TabIndex = 9;
             btnGenerate.Text = "Generate";
             btnGenerate.TextColor = Color.White;
             btnGenerate.UseVisualStyleBackColor = false;
@@ -578,6 +588,7 @@ namespace Bitvain
             btnCopyPrivateKey.Name = "btnCopyPrivateKey";
             btnCopyPrivateKey.Size = new Size(14, 16);
             btnCopyPrivateKey.TabIndex = 22;
+            btnCopyPrivateKey.TabStop = false;
             btnCopyPrivateKey.TextColor = Color.White;
             btnCopyPrivateKey.UseVisualStyleBackColor = false;
             btnCopyPrivateKey.Visible = false;
@@ -603,6 +614,7 @@ namespace Bitvain
             btnCopyAddress.Name = "btnCopyAddress";
             btnCopyAddress.Size = new Size(14, 16);
             btnCopyAddress.TabIndex = 21;
+            btnCopyAddress.TabStop = false;
             btnCopyAddress.TextColor = Color.White;
             btnCopyAddress.UseVisualStyleBackColor = false;
             btnCopyAddress.Visible = false;
@@ -729,7 +741,7 @@ namespace Bitvain
             btnCancel.Location = new Point(558, 47);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(71, 24);
-            btnCancel.TabIndex = 12;
+            btnCancel.TabIndex = 10;
             btnCancel.Text = "Cancel";
             btnCancel.TextColor = Color.White;
             btnCancel.UseVisualStyleBackColor = false;
@@ -777,7 +789,7 @@ namespace Bitvain
             btnMoveWindow.Location = new Point(-5, -16);
             btnMoveWindow.Name = "btnMoveWindow";
             btnMoveWindow.Padding = new Padding(2, 2, 0, 0);
-            btnMoveWindow.Size = new Size(674, 519);
+            btnMoveWindow.Size = new Size(674, 518);
             btnMoveWindow.TabIndex = 10;
             btnMoveWindow.TabStop = false;
             btnMoveWindow.TextColor = Color.FromArgb(13, 16, 24);
@@ -794,7 +806,7 @@ namespace Bitvain
             // timerCompletedMessage
             // 
             timerCompletedMessage.Interval = 1000;
-            timerCompletedMessage.Tick += timerCompletedMessage_Tick;
+            timerCompletedMessage.Tick += TimerCompletedMessage_Tick;
             // 
             // lblCompleted
             // 
@@ -808,6 +820,114 @@ namespace Bitvain
             lblCompleted.Text = "COMPLETED";
             lblCompleted.Visible = false;
             // 
+            // timerRepaintStuff
+            // 
+            timerRepaintStuff.Tick += TimerRepaintStuff_Tick;
+            // 
+            // btnMinimise
+            // 
+            btnMinimise.BackColor = Color.FromArgb(62, 72, 91);
+            btnMinimise.BackgroundColor = Color.FromArgb(62, 72, 91);
+            btnMinimise.BorderColor = Color.FromArgb(19, 22, 31);
+            btnMinimise.BorderRadius = 12;
+            btnMinimise.BorderSize = 0;
+            btnMinimise.FlatAppearance.BorderSize = 0;
+            btnMinimise.FlatStyle = FlatStyle.Flat;
+            btnMinimise.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMinimise.ForeColor = Color.White;
+            btnMinimise.Location = new Point(593, 12);
+            btnMinimise.Name = "btnMinimise";
+            btnMinimise.Padding = new Padding(0, 2, 0, 0);
+            btnMinimise.Size = new Size(24, 24);
+            btnMinimise.TabIndex = 3;
+            btnMinimise.Text = "⎯";
+            btnMinimise.TextColor = Color.White;
+            btnMinimise.UseVisualStyleBackColor = false;
+            btnMinimise.Click += BtnMinimise_Click;
+            // 
+            // btnAbout
+            // 
+            btnAbout.BackColor = Color.FromArgb(62, 72, 91);
+            btnAbout.BackgroundColor = Color.FromArgb(62, 72, 91);
+            btnAbout.BorderColor = Color.FromArgb(19, 22, 31);
+            btnAbout.BorderRadius = 12;
+            btnAbout.BorderSize = 0;
+            btnAbout.FlatAppearance.BorderSize = 0;
+            btnAbout.FlatStyle = FlatStyle.Flat;
+            btnAbout.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAbout.ForeColor = Color.White;
+            btnAbout.Location = new Point(563, 12);
+            btnAbout.Name = "btnAbout";
+            btnAbout.Padding = new Padding(2, 2, 0, 0);
+            btnAbout.Size = new Size(24, 24);
+            btnAbout.TabIndex = 2;
+            btnAbout.Text = "?";
+            btnAbout.TextColor = Color.White;
+            btnAbout.UseVisualStyleBackColor = false;
+            btnAbout.Click += BtnAbout_Click;
+            // 
+            // panelHelp
+            // 
+            panelHelp.BackColor = Color.FromArgb(13, 16, 24);
+            panelHelp.Controls.Add(btnCloseInfo);
+            panelHelp.Controls.Add(label14);
+            panelHelp.Location = new Point(12, 110);
+            panelHelp.Name = "panelHelp";
+            panelHelp.Size = new Size(635, 365);
+            panelHelp.TabIndex = 19;
+            panelHelp.Visible = false;
+            // 
+            // btnCloseInfo
+            // 
+            btnCloseInfo.BackColor = Color.FromArgb(62, 72, 91);
+            btnCloseInfo.BackgroundColor = Color.FromArgb(62, 72, 91);
+            btnCloseInfo.BorderColor = Color.PaleVioletRed;
+            btnCloseInfo.BorderRadius = 12;
+            btnCloseInfo.BorderSize = 0;
+            btnCloseInfo.FlatAppearance.BorderSize = 0;
+            btnCloseInfo.FlatStyle = FlatStyle.Flat;
+            btnCloseInfo.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCloseInfo.ForeColor = Color.White;
+            btnCloseInfo.Location = new Point(558, 331);
+            btnCloseInfo.Name = "btnCloseInfo";
+            btnCloseInfo.Size = new Size(71, 24);
+            btnCloseInfo.TabIndex = 4;
+            btnCloseInfo.Text = "Close";
+            btnCloseInfo.TextColor = Color.White;
+            btnCloseInfo.UseVisualStyleBackColor = false;
+            btnCloseInfo.Click += BtnCloseInfo_Click;
+            // 
+            // label14
+            // 
+            label14.Font = new Font("Segoe UI", 10F);
+            label14.ForeColor = Color.FromArgb(127, 137, 163);
+            label14.Location = new Point(15, 15);
+            label14.Name = "label14";
+            label14.Size = new Size(602, 328);
+            label14.TabIndex = 0;
+            label14.Text = resources.GetString("label14.Text");
+            // 
+            // rjButton1
+            // 
+            rjButton1.BackColor = Color.FromArgb(62, 72, 91);
+            rjButton1.BackgroundColor = Color.FromArgb(62, 72, 91);
+            rjButton1.BorderColor = Color.FromArgb(19, 22, 31);
+            rjButton1.BorderRadius = 12;
+            rjButton1.BorderSize = 0;
+            rjButton1.FlatAppearance.BorderSize = 0;
+            rjButton1.FlatStyle = FlatStyle.Flat;
+            rjButton1.Font = new Font("Book Antiqua", 11F, FontStyle.Bold | FontStyle.Italic);
+            rjButton1.ForeColor = Color.White;
+            rjButton1.Location = new Point(533, 12);
+            rjButton1.Name = "rjButton1";
+            rjButton1.Padding = new Padding(2, 0, 0, 0);
+            rjButton1.Size = new Size(24, 24);
+            rjButton1.TabIndex = 1;
+            rjButton1.Text = "i";
+            rjButton1.TextColor = Color.White;
+            rjButton1.UseVisualStyleBackColor = false;
+            rjButton1.Click += BtnHelp_Click;
+            // 
             // Bitvain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -817,12 +937,16 @@ namespace Bitvain
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnExit;
             ClientSize = new Size(662, 490);
+            Controls.Add(rjButton1);
+            Controls.Add(btnAbout);
+            Controls.Add(btnMinimise);
             Controls.Add(lblCompleted);
             Controls.Add(panelInputs);
             Controls.Add(btnExit);
             Controls.Add(panelResults);
             Controls.Add(panelStatus);
             Controls.Add(btnMoveWindow);
+            Controls.Add(panelHelp);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -846,6 +970,7 @@ namespace Bitvain
             panelResults.PerformLayout();
             panelStatus.ResumeLayout(false);
             panelStatus.PerformLayout();
+            panelHelp.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -904,5 +1029,12 @@ namespace Bitvain
         private Panel panel1;
         private System.Windows.Forms.Timer timerCompletedMessage;
         private Label lblCompleted;
+        private System.Windows.Forms.Timer timerRepaintStuff;
+        private CustomControls.RJControls.RJButton btnMinimise;
+        private CustomControls.RJControls.RJButton btnAbout;
+        private Panel panelHelp;
+        private Label label14;
+        private CustomControls.RJControls.RJButton btnCloseInfo;
+        private CustomControls.RJControls.RJButton rjButton1;
     }
 }

@@ -90,7 +90,7 @@ namespace Bitvain
             panelHelp = new Panel();
             btnCloseInfo = new CustomControls.RJControls.RJButton();
             label14 = new Label();
-            rjButton1 = new CustomControls.RJControls.RJButton();
+            btnHelp = new CustomControls.RJControls.RJButton();
             panelInputs.SuspendLayout();
             panelErrorMessage.SuspendLayout();
             panel1.SuspendLayout();
@@ -112,7 +112,7 @@ namespace Bitvain
             btnExit.BorderSize = 0;
             btnExit.FlatAppearance.BorderSize = 0;
             btnExit.FlatStyle = FlatStyle.Flat;
-            btnExit.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExit.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnExit.ForeColor = Color.White;
             btnExit.Location = new Point(623, 12);
             btnExit.Name = "btnExit";
@@ -160,7 +160,7 @@ namespace Bitvain
             panelErrorMessage.Controls.Add(panel1);
             panelErrorMessage.Location = new Point(14, 148);
             panelErrorMessage.Name = "panelErrorMessage";
-            panelErrorMessage.Size = new Size(530, 24);
+            panelErrorMessage.Size = new Size(510, 24);
             panelErrorMessage.TabIndex = 24;
             panelErrorMessage.Visible = false;
             // 
@@ -171,13 +171,13 @@ namespace Bitvain
             panel1.Controls.Add(label13);
             panel1.Location = new Point(1, 1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(528, 22);
+            panel1.Size = new Size(508, 22);
             panel1.TabIndex = 10;
             // 
             // lblErrorMessage
             // 
             lblErrorMessage.AutoSize = true;
-            lblErrorMessage.Font = new Font("Segoe UI", 10F);
+            lblErrorMessage.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             lblErrorMessage.ForeColor = Color.FromArgb(127, 137, 163);
             lblErrorMessage.Location = new Point(35, 0);
             lblErrorMessage.Name = "lblErrorMessage";
@@ -188,7 +188,7 @@ namespace Bitvain
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 10F);
+            label13.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label13.ForeColor = Color.IndianRed;
             label13.Location = new Point(5, 0);
             label13.Name = "label13";
@@ -213,7 +213,7 @@ namespace Bitvain
             comboBoxAddressType.BorderColor = Color.FromArgb(24, 27, 36);
             comboBoxAddressType.BorderSize = 0;
             comboBoxAddressType.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxAddressType.Font = new Font("Segoe UI", 10F);
+            comboBoxAddressType.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxAddressType.ForeColor = Color.LightGray;
             comboBoxAddressType.IconColor = Color.White;
             comboBoxAddressType.Items.AddRange(new object[] { "Legacy P2PKH (prefix 1)", "SegwitP2SH (prefix 3)", "Native segwit (prefix bc1q)", "Taproot P2TR (prefix bc1p)" });
@@ -239,7 +239,7 @@ namespace Bitvain
             btnCPUThreadsMore.FlatAppearance.MouseDownBackColor = Color.FromArgb(19, 22, 31);
             btnCPUThreadsMore.FlatAppearance.MouseOverBackColor = Color.FromArgb(19, 22, 31);
             btnCPUThreadsMore.FlatStyle = FlatStyle.Flat;
-            btnCPUThreadsMore.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
+            btnCPUThreadsMore.Font = new Font("Segoe UI", 7F, FontStyle.Bold, GraphicsUnit.Point);
             btnCPUThreadsMore.ForeColor = Color.FromArgb(62, 72, 91);
             btnCPUThreadsMore.Location = new Point(260, 112);
             btnCPUThreadsMore.Name = "btnCPUThreadsMore";
@@ -263,7 +263,7 @@ namespace Bitvain
             btnCPUThreadsLess.FlatAppearance.MouseDownBackColor = Color.FromArgb(19, 22, 31);
             btnCPUThreadsLess.FlatAppearance.MouseOverBackColor = Color.FromArgb(19, 22, 31);
             btnCPUThreadsLess.FlatStyle = FlatStyle.Flat;
-            btnCPUThreadsLess.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
+            btnCPUThreadsLess.Font = new Font("Segoe UI", 7F, FontStyle.Bold, GraphicsUnit.Point);
             btnCPUThreadsLess.ForeColor = Color.FromArgb(62, 72, 91);
             btnCPUThreadsLess.Location = new Point(222, 112);
             btnCPUThreadsLess.Name = "btnCPUThreadsLess";
@@ -279,7 +279,7 @@ namespace Bitvain
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 10F);
+            label12.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label12.ForeColor = Color.FromArgb(127, 137, 163);
             label12.Location = new Point(281, 13);
             label12.Name = "label12";
@@ -290,7 +290,7 @@ namespace Bitvain
             // lblCPUThreads
             // 
             lblCPUThreads.AutoSize = true;
-            lblCPUThreads.Font = new Font("Segoe UI", 10F);
+            lblCPUThreads.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             lblCPUThreads.ForeColor = Color.FromArgb(148, 84, 5);
             lblCPUThreads.Location = new Point(241, 115);
             lblCPUThreads.Name = "lblCPUThreads";
@@ -301,7 +301,7 @@ namespace Bitvain
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 10F);
+            label11.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label11.ForeColor = Color.FromArgb(127, 137, 163);
             label11.Location = new Point(14, 115);
             label11.Name = "label11";
@@ -312,7 +312,7 @@ namespace Bitvain
             // lblExampleAddressPart2
             // 
             lblExampleAddressPart2.AutoSize = true;
-            lblExampleAddressPart2.Font = new Font("Consolas", 11.25F);
+            lblExampleAddressPart2.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lblExampleAddressPart2.ForeColor = Color.FromArgb(148, 84, 5);
             lblExampleAddressPart2.Location = new Point(420, 82);
             lblExampleAddressPart2.Margin = new Padding(0);
@@ -336,10 +336,11 @@ namespace Bitvain
             comboBoxTargetPosition.AutoSize = true;
             comboBoxTargetPosition.BackColor = Color.Transparent;
             comboBoxTargetPosition.BackgroundImage = Resources.dropdownPosition;
+            comboBoxTargetPosition.BackgroundImageLayout = ImageLayout.Stretch;
             comboBoxTargetPosition.BorderColor = Color.FromArgb(24, 27, 36);
             comboBoxTargetPosition.BorderSize = 0;
             comboBoxTargetPosition.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxTargetPosition.Font = new Font("Segoe UI", 10F);
+            comboBoxTargetPosition.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxTargetPosition.ForeColor = Color.LightGray;
             comboBoxTargetPosition.IconColor = Color.White;
             comboBoxTargetPosition.Items.AddRange(new object[] { "after prefix", "anywhere", "suffix" });
@@ -357,7 +358,7 @@ namespace Bitvain
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10F);
+            label5.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = Color.FromArgb(127, 137, 163);
             label5.Location = new Point(201, 47);
             label5.Name = "label5";
@@ -368,7 +369,7 @@ namespace Bitvain
             // lblExampleTarget
             // 
             lblExampleTarget.AutoSize = true;
-            lblExampleTarget.Font = new Font("Consolas", 11.25F);
+            lblExampleTarget.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lblExampleTarget.ForeColor = Color.FromArgb(247, 147, 26);
             lblExampleTarget.Location = new Point(93, 82);
             lblExampleTarget.Margin = new Padding(0);
@@ -380,9 +381,9 @@ namespace Bitvain
             // lblDifficultyFormula
             // 
             lblDifficultyFormula.AutoSize = true;
-            lblDifficultyFormula.Font = new Font("Segoe UI", 10F);
+            lblDifficultyFormula.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             lblDifficultyFormula.ForeColor = Color.FromArgb(148, 84, 5);
-            lblDifficultyFormula.Location = new Point(373, 115);
+            lblDifficultyFormula.Location = new Point(438, 114);
             lblDifficultyFormula.Name = "lblDifficultyFormula";
             lblDifficultyFormula.Size = new Size(21, 19);
             lblDifficultyFormula.TabIndex = 12;
@@ -391,7 +392,7 @@ namespace Bitvain
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 10F);
+            label4.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label4.ForeColor = Color.FromArgb(127, 137, 163);
             label4.Location = new Point(14, 81);
             label4.Name = "label4";
@@ -402,7 +403,7 @@ namespace Bitvain
             // lblExampleAddressPart1
             // 
             lblExampleAddressPart1.AutoSize = true;
-            lblExampleAddressPart1.Font = new Font("Consolas", 11.25F);
+            lblExampleAddressPart1.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lblExampleAddressPart1.ForeColor = Color.FromArgb(148, 84, 5);
             lblExampleAddressPart1.Location = new Point(143, 82);
             lblExampleAddressPart1.Margin = new Padding(0);
@@ -414,7 +415,7 @@ namespace Bitvain
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10F);
+            label3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label3.ForeColor = Color.FromArgb(127, 137, 163);
             label3.Location = new Point(14, 47);
             label3.Name = "label3";
@@ -425,7 +426,7 @@ namespace Bitvain
             // lblExamplePrefix
             // 
             lblExamplePrefix.AutoSize = true;
-            lblExamplePrefix.Font = new Font("Consolas", 11.25F);
+            lblExamplePrefix.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lblExamplePrefix.ForeColor = Color.FromArgb(148, 84, 5);
             lblExamplePrefix.Location = new Point(84, 82);
             lblExamplePrefix.Margin = new Padding(0);
@@ -447,10 +448,11 @@ namespace Bitvain
             // 
             comboBoxCaseSensitive.BackColor = Color.Transparent;
             comboBoxCaseSensitive.BackgroundImage = Resources.dropdownCaseSensitive;
+            comboBoxCaseSensitive.BackgroundImageLayout = ImageLayout.Stretch;
             comboBoxCaseSensitive.BorderColor = Color.FromArgb(24, 27, 36);
             comboBoxCaseSensitive.BorderSize = 0;
             comboBoxCaseSensitive.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxCaseSensitive.Font = new Font("Segoe UI", 10F);
+            comboBoxCaseSensitive.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             comboBoxCaseSensitive.ForeColor = Color.LightGray;
             comboBoxCaseSensitive.IconColor = Color.White;
             comboBoxCaseSensitive.Items.AddRange(new object[] { "N", "Y" });
@@ -468,9 +470,9 @@ namespace Bitvain
             // lblDifficulty
             // 
             lblDifficulty.AutoSize = true;
-            lblDifficulty.Font = new Font("Segoe UI", 10F);
+            lblDifficulty.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             lblDifficulty.ForeColor = Color.FromArgb(148, 84, 5);
-            lblDifficulty.Location = new Point(350, 115);
+            lblDifficulty.Location = new Point(415, 114);
             lblDifficulty.Name = "lblDifficulty";
             lblDifficulty.Size = new Size(17, 19);
             lblDifficulty.TabIndex = 8;
@@ -479,9 +481,9 @@ namespace Bitvain
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10F);
+            label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label2.ForeColor = Color.FromArgb(127, 137, 163);
-            label2.Location = new Point(290, 115);
+            label2.Location = new Point(355, 114);
             label2.Name = "label2";
             label2.Size = new Size(62, 19);
             label2.TabIndex = 7;
@@ -490,7 +492,7 @@ namespace Bitvain
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 10F);
+            label1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label1.ForeColor = Color.FromArgb(127, 137, 163);
             label1.Location = new Point(14, 13);
             label1.Name = "label1";
@@ -511,7 +513,7 @@ namespace Bitvain
             // 
             textBoxTargetString.BackColor = Color.FromArgb(24, 27, 36);
             textBoxTargetString.BorderStyle = BorderStyle.None;
-            textBoxTargetString.Font = new Font("Segoe UI", 10F);
+            textBoxTargetString.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             textBoxTargetString.ForeColor = Color.LightGray;
             textBoxTargetString.Location = new Point(10, 1);
             textBoxTargetString.MaxLength = 12;
@@ -531,11 +533,11 @@ namespace Bitvain
             btnGenerate.Enabled = false;
             btnGenerate.FlatAppearance.BorderSize = 0;
             btnGenerate.FlatStyle = FlatStyle.Flat;
-            btnGenerate.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGenerate.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnGenerate.ForeColor = Color.White;
-            btnGenerate.Location = new Point(558, 148);
+            btnGenerate.Location = new Point(538, 148);
             btnGenerate.Name = "btnGenerate";
-            btnGenerate.Size = new Size(71, 24);
+            btnGenerate.Size = new Size(91, 24);
             btnGenerate.TabIndex = 9;
             btnGenerate.Text = "Generate";
             btnGenerate.TextColor = Color.White;
@@ -560,7 +562,7 @@ namespace Bitvain
             // lblCopied
             // 
             lblCopied.AutoSize = true;
-            lblCopied.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblCopied.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             lblCopied.ForeColor = Color.FromArgb(127, 137, 163);
             lblCopied.Location = new Point(571, 14);
             lblCopied.Name = "lblCopied";
@@ -582,7 +584,7 @@ namespace Bitvain
             btnCopyPrivateKey.FlatAppearance.MouseDownBackColor = Color.Transparent;
             btnCopyPrivateKey.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnCopyPrivateKey.FlatStyle = FlatStyle.Flat;
-            btnCopyPrivateKey.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCopyPrivateKey.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnCopyPrivateKey.ForeColor = Color.White;
             btnCopyPrivateKey.Location = new Point(555, 50);
             btnCopyPrivateKey.Name = "btnCopyPrivateKey";
@@ -608,7 +610,7 @@ namespace Bitvain
             btnCopyAddress.FlatAppearance.MouseDownBackColor = Color.Transparent;
             btnCopyAddress.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnCopyAddress.FlatStyle = FlatStyle.Flat;
-            btnCopyAddress.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCopyAddress.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnCopyAddress.ForeColor = Color.White;
             btnCopyAddress.Location = new Point(555, 16);
             btnCopyAddress.Name = "btnCopyAddress";
@@ -624,7 +626,7 @@ namespace Bitvain
             // lblGeneratedPrivateKey
             // 
             lblGeneratedPrivateKey.AutoSize = true;
-            lblGeneratedPrivateKey.Font = new Font("Consolas", 11.25F);
+            lblGeneratedPrivateKey.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lblGeneratedPrivateKey.ForeColor = Color.FromArgb(148, 84, 5);
             lblGeneratedPrivateKey.Location = new Point(96, 48);
             lblGeneratedPrivateKey.Margin = new Padding(0);
@@ -636,7 +638,7 @@ namespace Bitvain
             // lblGeneratedAddress
             // 
             lblGeneratedAddress.AutoSize = true;
-            lblGeneratedAddress.Font = new Font("Consolas", 11.25F);
+            lblGeneratedAddress.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lblGeneratedAddress.ForeColor = Color.FromArgb(148, 84, 5);
             lblGeneratedAddress.Location = new Point(85, 14);
             lblGeneratedAddress.Margin = new Padding(0);
@@ -648,7 +650,7 @@ namespace Bitvain
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 10F);
+            label8.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label8.ForeColor = Color.FromArgb(127, 137, 163);
             label8.Location = new Point(14, 47);
             label8.Name = "label8";
@@ -659,7 +661,7 @@ namespace Bitvain
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 10F);
+            label7.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label7.ForeColor = Color.FromArgb(127, 137, 163);
             label7.Location = new Point(14, 13);
             label7.Name = "label7";
@@ -685,20 +687,20 @@ namespace Bitvain
             // lblTimeElapsed
             // 
             lblTimeElapsed.AutoSize = true;
-            lblTimeElapsed.Font = new Font("Segoe UI", 10F);
+            lblTimeElapsed.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             lblTimeElapsed.ForeColor = Color.FromArgb(148, 84, 5);
-            lblTimeElapsed.Location = new Point(355, 13);
+            lblTimeElapsed.Location = new Point(421, 13);
             lblTimeElapsed.Name = "lblTimeElapsed";
-            lblTimeElapsed.Size = new Size(15, 19);
+            lblTimeElapsed.Size = new Size(96, 19);
             lblTimeElapsed.TabIndex = 18;
-            lblTimeElapsed.Text = "-";
+            lblTimeElapsed.Text = "0d, 0h, 0m, 0s";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 10F);
+            label10.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label10.ForeColor = Color.FromArgb(127, 137, 163);
-            label10.Location = new Point(261, 13);
+            label10.Location = new Point(327, 13);
             label10.Name = "label10";
             label10.Size = new Size(88, 19);
             label10.TabIndex = 15;
@@ -707,7 +709,7 @@ namespace Bitvain
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 10F);
+            label9.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label9.ForeColor = Color.FromArgb(127, 137, 163);
             label9.Location = new Point(14, 47);
             label9.Name = "label9";
@@ -718,13 +720,13 @@ namespace Bitvain
             // lblAddressesPerSecond
             // 
             lblAddressesPerSecond.AutoSize = true;
-            lblAddressesPerSecond.Font = new Font("Segoe UI", 10F);
+            lblAddressesPerSecond.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             lblAddressesPerSecond.ForeColor = Color.FromArgb(148, 84, 5);
             lblAddressesPerSecond.Location = new Point(207, 47);
             lblAddressesPerSecond.Name = "lblAddressesPerSecond";
-            lblAddressesPerSecond.Size = new Size(15, 19);
+            lblAddressesPerSecond.Size = new Size(17, 19);
             lblAddressesPerSecond.TabIndex = 13;
-            lblAddressesPerSecond.Text = "-";
+            lblAddressesPerSecond.Text = "0";
             // 
             // btnCancel
             // 
@@ -736,11 +738,11 @@ namespace Bitvain
             btnCancel.Enabled = false;
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCancel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(558, 47);
+            btnCancel.Location = new Point(538, 47);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(71, 24);
+            btnCancel.Size = new Size(91, 24);
             btnCancel.TabIndex = 10;
             btnCancel.Text = "Cancel";
             btnCancel.TextColor = Color.White;
@@ -750,18 +752,18 @@ namespace Bitvain
             // lblAddressesGenerated
             // 
             lblAddressesGenerated.AutoSize = true;
-            lblAddressesGenerated.Font = new Font("Segoe UI", 10F);
+            lblAddressesGenerated.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             lblAddressesGenerated.ForeColor = Color.FromArgb(148, 84, 5);
             lblAddressesGenerated.Location = new Point(157, 13);
             lblAddressesGenerated.Name = "lblAddressesGenerated";
-            lblAddressesGenerated.Size = new Size(15, 19);
+            lblAddressesGenerated.Size = new Size(17, 19);
             lblAddressesGenerated.TabIndex = 11;
-            lblAddressesGenerated.Text = "-";
+            lblAddressesGenerated.Text = "0";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 10F);
+            label6.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label6.ForeColor = Color.FromArgb(127, 137, 163);
             label6.Location = new Point(14, 13);
             label6.Name = "label6";
@@ -784,7 +786,7 @@ namespace Bitvain
             btnMoveWindow.FlatAppearance.BorderSize = 0;
             btnMoveWindow.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnMoveWindow.FlatStyle = FlatStyle.Flat;
-            btnMoveWindow.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMoveWindow.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnMoveWindow.ForeColor = Color.FromArgb(13, 16, 24);
             btnMoveWindow.Location = new Point(-5, -16);
             btnMoveWindow.Name = "btnMoveWindow";
@@ -811,7 +813,7 @@ namespace Bitvain
             // lblCompleted
             // 
             lblCompleted.AutoSize = true;
-            lblCompleted.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCompleted.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             lblCompleted.ForeColor = Color.FromArgb(247, 147, 26);
             lblCompleted.Location = new Point(562, 90);
             lblCompleted.Name = "lblCompleted";
@@ -833,7 +835,7 @@ namespace Bitvain
             btnMinimise.BorderSize = 0;
             btnMinimise.FlatAppearance.BorderSize = 0;
             btnMinimise.FlatStyle = FlatStyle.Flat;
-            btnMinimise.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMinimise.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnMinimise.ForeColor = Color.White;
             btnMinimise.Location = new Point(593, 12);
             btnMinimise.Name = "btnMinimise";
@@ -854,14 +856,14 @@ namespace Bitvain
             btnAbout.BorderSize = 0;
             btnAbout.FlatAppearance.BorderSize = 0;
             btnAbout.FlatStyle = FlatStyle.Flat;
-            btnAbout.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAbout.Font = new Font("Book Antiqua", 11F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             btnAbout.ForeColor = Color.White;
-            btnAbout.Location = new Point(563, 12);
+            btnAbout.Location = new Point(533, 12);
             btnAbout.Name = "btnAbout";
-            btnAbout.Padding = new Padding(2, 2, 0, 0);
+            btnAbout.Padding = new Padding(2, 0, 0, 0);
             btnAbout.Size = new Size(24, 24);
             btnAbout.TabIndex = 2;
-            btnAbout.Text = "?";
+            btnAbout.Text = "i";
             btnAbout.TextColor = Color.White;
             btnAbout.UseVisualStyleBackColor = false;
             btnAbout.Click += BtnAbout_Click;
@@ -886,7 +888,7 @@ namespace Bitvain
             btnCloseInfo.BorderSize = 0;
             btnCloseInfo.FlatAppearance.BorderSize = 0;
             btnCloseInfo.FlatStyle = FlatStyle.Flat;
-            btnCloseInfo.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCloseInfo.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnCloseInfo.ForeColor = Color.White;
             btnCloseInfo.Location = new Point(558, 331);
             btnCloseInfo.Name = "btnCloseInfo";
@@ -899,7 +901,7 @@ namespace Bitvain
             // 
             // label14
             // 
-            label14.Font = new Font("Segoe UI", 10F);
+            label14.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             label14.ForeColor = Color.FromArgb(127, 137, 163);
             label14.Location = new Point(15, 15);
             label14.Name = "label14";
@@ -907,26 +909,26 @@ namespace Bitvain
             label14.TabIndex = 0;
             label14.Text = resources.GetString("label14.Text");
             // 
-            // rjButton1
+            // btnHelp
             // 
-            rjButton1.BackColor = Color.FromArgb(62, 72, 91);
-            rjButton1.BackgroundColor = Color.FromArgb(62, 72, 91);
-            rjButton1.BorderColor = Color.FromArgb(19, 22, 31);
-            rjButton1.BorderRadius = 12;
-            rjButton1.BorderSize = 0;
-            rjButton1.FlatAppearance.BorderSize = 0;
-            rjButton1.FlatStyle = FlatStyle.Flat;
-            rjButton1.Font = new Font("Book Antiqua", 11F, FontStyle.Bold | FontStyle.Italic);
-            rjButton1.ForeColor = Color.White;
-            rjButton1.Location = new Point(533, 12);
-            rjButton1.Name = "rjButton1";
-            rjButton1.Padding = new Padding(2, 0, 0, 0);
-            rjButton1.Size = new Size(24, 24);
-            rjButton1.TabIndex = 1;
-            rjButton1.Text = "i";
-            rjButton1.TextColor = Color.White;
-            rjButton1.UseVisualStyleBackColor = false;
-            rjButton1.Click += BtnHelp_Click;
+            btnHelp.BackColor = Color.FromArgb(62, 72, 91);
+            btnHelp.BackgroundColor = Color.FromArgb(62, 72, 91);
+            btnHelp.BorderColor = Color.FromArgb(19, 22, 31);
+            btnHelp.BorderRadius = 12;
+            btnHelp.BorderSize = 0;
+            btnHelp.FlatAppearance.BorderSize = 0;
+            btnHelp.FlatStyle = FlatStyle.Flat;
+            btnHelp.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnHelp.ForeColor = Color.White;
+            btnHelp.Location = new Point(563, 12);
+            btnHelp.Name = "btnHelp";
+            btnHelp.Padding = new Padding(2, 0, 0, 0);
+            btnHelp.Size = new Size(24, 24);
+            btnHelp.TabIndex = 1;
+            btnHelp.Text = "?";
+            btnHelp.TextColor = Color.White;
+            btnHelp.UseVisualStyleBackColor = false;
+            btnHelp.Click += BtnHelp_Click;
             // 
             // Bitvain
             // 
@@ -937,7 +939,7 @@ namespace Bitvain
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = btnExit;
             ClientSize = new Size(662, 490);
-            Controls.Add(rjButton1);
+            Controls.Add(btnHelp);
             Controls.Add(btnAbout);
             Controls.Add(btnMinimise);
             Controls.Add(lblCompleted);
@@ -1035,6 +1037,6 @@ namespace Bitvain
         private Panel panelHelp;
         private Label label14;
         private CustomControls.RJControls.RJButton btnCloseInfo;
-        private CustomControls.RJControls.RJButton rjButton1;
+        private CustomControls.RJControls.RJButton btnHelp;
     }
 }

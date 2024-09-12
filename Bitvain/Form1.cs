@@ -5,16 +5,13 @@
    ▒▒▒▒▒▒  ▒▒    ▒▒    ▒▒    ▒▒ ▒▒▒▒▒▒▒ ▒▒ ▒▒ ▒▒  ▒▒ 
    ▓▓   ▓▓ ▓▓    ▓▓     ▓▓  ▓▓  ▓▓   ▓▓ ▓▓ ▓▓  ▓▓ ▓▓ 
    ██████  ██    ██      ████   ██   ██ ██ ██   ████ */
-//?=========== VANITY ADDRESS GENERATOR ============
+//? =========== VANITY ADDRESS GENERATOR ============
 // 
 //!● Homepage.......... https://bitvain.btcdir.org/
 //!● Version history... https://bitvain.btcdir.org/version-history/
 //!● Download.......... https://bitvain.btcdir.org/download/
 //
 //TODO LIST______________________________________________________________________________________________
-//TODO reset/initialise values to numerics instead of '-'
-//TODO test
-//TODO installer
 //BUG LIST_______________________________________________________________________________________________
 //!░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -32,18 +29,18 @@ namespace Bitvain
         #region variable declaration, etc
 
         long addressesGenerated; // total generated for the query
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource = new();
         private int ThreadCount = 8;
-        private Stopwatch stopwatch;
-        private System.Windows.Forms.Timer updateTimer;
+        private Stopwatch stopwatch = new();
+        private System.Windows.Forms.Timer updateTimer = new();
         bool caseSensitiveSearch;
-        string targetLocation; // 'prefix' (after prefix), 'anywhere', 'suffix'
+        string targetLocation = ""; // 'prefix' (after prefix), 'anywhere', 'suffix'
         ScriptPubKeyType addressType; // currently selected address type
         int addressPrefixLength; // represents number of characters in prefix of selected address type
         int totalAddressLength; // total address length for the address type
-        string exampleAddressWithoutPrefix;
-        List<char> disallowedCharacters = [];
-        string disallowedCharsErrorMessage;
+        string exampleAddressWithoutPrefix = "";
+        List<char> disallowedCharacters = new();
+        string disallowedCharsErrorMessage = "";
 
         #region rounded form
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
@@ -80,7 +77,9 @@ namespace Bitvain
             #endregion
 
             #region rounded panels
-            Control[] panelsToBeRounded = [panelInputs, panelStatus, panelResults, panelInputStringContainer, panelCaseSensitiveContainer, panelTargetPositionContainer, panelAddressTypeContainer, panelErrorMessage, panel1, panelHelp];
+            
+            Control[] panelsToBeRounded = new Control[] { panelInputs, panelStatus, panelResults, panelInputStringContainer, panelCaseSensitiveContainer, panelTargetPositionContainer, panelAddressTypeContainer, panelErrorMessage, panel1, panelHelp };
+
             foreach (Control control in panelsToBeRounded)
             {
                 control.Paint += Panel_Paint;
@@ -112,9 +111,35 @@ namespace Bitvain
             });
 
             label11.Text = $"CPU threads ({Environment.ProcessorCount} recommended)";
-            lblCPUThreads.Text = Convert.ToString(Environment.ProcessorCount);
+            lblCPUThreads.Text = Environment.ProcessorCount.ToString("D2");
             ThreadCount = Environment.ProcessorCount;
+
+            PlaceUIElements();
             timerRepaintStuff.Start();
+        }
+
+        private void PlaceUIElements()
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                panelInputStringContainer.Location = new Point(label1.Location.X + label1.Width + 5, panelInputStringContainer.Location.Y);
+                panelAddressTypeContainer.Location = new Point(label12.Location.X + label12.Width + 5, panelAddressTypeContainer.Location.Y);
+                panelCaseSensitiveContainer.Location = new Point(label3.Location.X + label3.Width + 5, panelCaseSensitiveContainer.Location.Y);
+                panelTargetPositionContainer.Location = new Point(label5.Location.X + label5.Width + 5, panelTargetPositionContainer.Location.Y);
+                btnCPUThreadsLess.Location = new Point(label11.Location.X + label11.Width + 5, btnCPUThreadsLess.Location.Y);
+                lblCPUThreads.Location = new Point(btnCPUThreadsLess.Location.X + btnCPUThreadsLess.Width, lblCPUThreads.Location.Y);
+                btnCPUThreadsMore.Location = new Point(lblCPUThreads.Location.X + lblCPUThreads.Width, btnCPUThreadsMore.Location.Y);
+                label2.Location = new Point(btnCPUThreadsMore.Location.X + btnCPUThreadsMore.Width + 10, label2.Location.Y);
+                lblDifficulty.Location = new Point(label2.Location.X + label2.Width + 5, lblDifficulty.Location.Y);
+                lblDifficultyFormula.Location = new Point(lblDifficulty.Location.X + lblDifficulty.Width, lblDifficultyFormula.Location.Y);
+
+                lblAddressesGenerated.Location = new Point(label6.Location.X + label6.Width + 5, lblAddressesGenerated.Location.Y);
+                lblTimeElapsed.Location = new Point(label10.Location.X + label10.Width + 5, lblTimeElapsed.Location.Y);
+                lblAddressesPerSecond.Location = new Point(label9.Location.X + label9.Width + 5, lblAddressesPerSecond.Location.Y);
+
+                lblGeneratedAddress.Location = new Point(label7.Location.X + label7.Width + 5, lblGeneratedAddress.Location.Y);
+                lblGeneratedPrivateKey.Location = new Point(label8.Location.X + label8.Width + 5, lblGeneratedPrivateKey.Location.Y);
+            });
         }
         #endregion
 
@@ -164,6 +189,118 @@ namespace Bitvain
             ConstructExample();
         }
 
+        private void BtnCPUThreadsLess_Click(object sender, EventArgs e)
+        {
+            if (ThreadCount > 1)
+            {
+                ThreadCount--;
+                lblCPUThreads.Invoke((MethodInvoker)delegate
+                {
+                    lblCPUThreads.Text = ThreadCount.ToString("D2");
+                });
+            }
+            if (ThreadCount < 2)
+            {
+                btnCPUThreadsLess.Enabled = false;
+            }
+            else
+            {
+                btnCPUThreadsLess.Enabled = true;
+            }
+            btnCPUThreadsMore.Enabled = true;
+        }
+
+        private void BtnCPUThreadsMore_Click(object sender, EventArgs e)
+        {
+            if (ThreadCount < 64)
+            {
+                ThreadCount++;
+                lblCPUThreads.Invoke((MethodInvoker)delegate
+                {
+                    lblCPUThreads.Text = ThreadCount.ToString("D2");
+                });
+            }
+            if (ThreadCount >= 64)
+            {
+                btnCPUThreadsMore.Enabled = false;
+            }
+            else
+            {
+                btnCPUThreadsMore.Enabled = true;
+            }
+            btnCPUThreadsLess.Enabled = true;
+        }
+
+        private void ComboBoxAddressType_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxAddressType.SelectedIndex == 0) // legacy P2PKH (1 prefix) base58
+            {
+                comboBoxCaseSensitive.Enabled = true;
+                lblExamplePrefix.Invoke((MethodInvoker)delegate
+                {
+                    lblExamplePrefix.Text = "1";
+                });
+                addressType = ScriptPubKeyType.Legacy;
+                addressPrefixLength = 1;
+                totalAddressLength = 34;
+                exampleAddressWithoutPrefix = "BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2";
+                disallowedCharacters = new List<char> { '0', 'O', 'I', 'l' };
+                disallowedCharsErrorMessage = "Legacy: O (upper o), 0 (zero), I (upper i) && l (lower L) are invalid characters";
+            }
+
+            if (comboBoxAddressType.SelectedIndex == 1) // segwitP2SH (3 prefix) base58
+            {
+                comboBoxCaseSensitive.Enabled = true;
+                lblExamplePrefix.Invoke((MethodInvoker)delegate
+                {
+                    lblExamplePrefix.Text = "3";
+                });
+                addressType = ScriptPubKeyType.SegwitP2SH;
+                addressPrefixLength = 1;
+                totalAddressLength = 34;
+                exampleAddressWithoutPrefix = "BpNv8kWhGqjiKysyaADpsdrFABNqZhdCE";
+                disallowedCharacters = new List<char> { '0', 'O', 'I', 'l' };
+                disallowedCharsErrorMessage = "SegwitP2SH: O (upper o), 0 (zero), I (upper i) && l (lower L) are invalid characters";
+            }
+
+            if (comboBoxAddressType.SelectedIndex == 2) // segwit (bc1q prefix) bech32
+            {
+                comboBoxCaseSensitive.SelectedIndex = 0;
+                comboBoxCaseSensitive.Enabled = false;
+                textBoxTargetString.Text = textBoxTargetString.Text.ToLower();
+                lblExamplePrefix.Invoke((MethodInvoker)delegate
+                {
+                    lblExamplePrefix.Text = "bc1q";
+                });
+                addressType = ScriptPubKeyType.Segwit;
+                addressPrefixLength = 4;
+                totalAddressLength = 42;
+                exampleAddressWithoutPrefix = "ar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq";
+                disallowedCharacters = new List<char> { 'b', 'i', 'o', 'l', 'O', 'B', 'I', 'L' }; // nb the caps get translated to lower-case so they need disallowing too
+                disallowedCharsErrorMessage = "Segwit: b, i, o (lower O) && l (lower L) are invalid characters";
+            }
+
+            if (comboBoxAddressType.SelectedIndex == 3) // taproot (bc1p prefix) bech32
+            {
+                comboBoxCaseSensitive.SelectedIndex = 0;
+                comboBoxCaseSensitive.Enabled = false;
+                textBoxTargetString.Text = textBoxTargetString.Text.ToLower();
+                lblExamplePrefix.Invoke((MethodInvoker)delegate
+                {
+                    lblExamplePrefix.Text = "bc1p";
+                });
+                addressType = ScriptPubKeyType.TaprootBIP86;
+                addressPrefixLength = 4;
+                totalAddressLength = 62;
+                exampleAddressWithoutPrefix = "0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqzk5jj0";
+                disallowedCharacters = new List<char> { 'b', 'i', 'o', 'l', 'O', 'B', 'I', 'L' }; // nb the caps get translated to lower-case so they need disallowing too
+                disallowedCharsErrorMessage = "Taproot: b, i, o (lower O) && l (lower L) are invalid characters";
+            }
+
+            RecalculateDifficulty();
+            ConstructExample();
+        }
+
         private void RecalculateDifficulty()
         {
             #region button states
@@ -176,7 +313,7 @@ namespace Bitvain
             {
                 btnGenerate.Enabled = false;
                 lblDifficultyFormula.Visible = false;
-                lblDifficulty.Text = "-";
+                lblDifficulty.Text = "0";
                 return;
             }
             #endregion
@@ -380,7 +517,7 @@ namespace Bitvain
             {
                 lblGeneratedPrivateKey.Text = string.Empty;
             });
-            lblAddressesPerSecond.Text = "-";
+            lblAddressesPerSecond.Text = "0";
 
             addressesGenerated = 0;
 
@@ -395,7 +532,8 @@ namespace Bitvain
         private void RunParallelVanityAddressGeneration(string pattern, CancellationToken token)
         {
             // Using ConcurrentBag to safely share data across tasks
-            ConcurrentBag<string> result = [];
+            ConcurrentBag<string> result = new();
+
 
             // Create and start multiple tasks
             Task[] tasks = new Task[ThreadCount];
@@ -403,20 +541,27 @@ namespace Bitvain
             {
                 if (targetLocation == "prefix")
                 {
-                    tasks[i] = Task.Run(() => GenerateVanityAddressPrefix(pattern, result, token));
+                    tasks[i] = Task.Run(() => GenerateVanityAddressPrefix(pattern, result, token), token);
                 }
                 if (targetLocation == "anywhere") //anywhere in address
                 {
-                    tasks[i] = Task.Run(() => GenerateVanityAddressAnywhere(pattern, result, token));
+                    tasks[i] = Task.Run(() => GenerateVanityAddressAnywhere(pattern, result, token), token);
                 }
                 if (targetLocation == "suffix")
                 {
-                    tasks[i] = Task.Run(() => GenerateVanityAddressSuffix(pattern, result, token));
+                    tasks[i] = Task.Run(() => GenerateVanityAddressSuffix(pattern, result, token), token);
                 }
             }
 
-            // Wait for any task to complete
-            Task.WaitAny(tasks);
+            try
+            {
+                // Wait for any task to complete
+                Task.WaitAny(tasks, token);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
 
             // Cancel remaining tasks
             _cancellationTokenSource.Cancel();
@@ -441,8 +586,6 @@ namespace Bitvain
             }
         }
 
-
-
         private void GenerateVanityAddressPrefix(string pattern, ConcurrentBag<string> result, CancellationToken token)
         {
             ReadOnlySpan<char> searchPattern = pattern.AsSpan(); // Using Span for pattern search
@@ -450,7 +593,7 @@ namespace Bitvain
 
             while (!token.IsCancellationRequested)
             {
-                Key privateKey = new Key();
+                Key privateKey = new();
                 BitcoinSecret bitcoinSecret = privateKey.GetBitcoinSecret(Network.Main);
                 string address = bitcoinSecret.GetAddress(addressType).ToString();
 
@@ -472,10 +615,8 @@ namespace Bitvain
             }
         }
 
-
         private void GenerateVanityAddressAnywhere(string pattern, ConcurrentBag<string> result, CancellationToken token)
         {
-            ReadOnlySpan<char> searchPattern = pattern.AsSpan();  // Use Span for efficient memory usage
             bool isCaseSensitive = caseSensitiveSearch;
 
             while (!token.IsCancellationRequested)
@@ -483,8 +624,7 @@ namespace Bitvain
                 Key privateKey = new();
                 BitcoinSecret bitcoinSecret = privateKey.GetBitcoinSecret(Network.Main);
                 string address = bitcoinSecret.GetAddress(addressType).ToString();
-                ReadOnlySpan<char> addressSpan = address.AsSpan();
-
+                
                 Interlocked.Increment(ref addressesGenerated);
                 if (addressesGenerated % 100 == 0)
                 {
@@ -501,42 +641,6 @@ namespace Bitvain
                 }
             }
         }
-
-
-/*
-        private void GenerateVanityAddressAnywhere(string pattern, ConcurrentBag<string> result, CancellationToken token)
-        {
-            while (!token.IsCancellationRequested)
-            {
-                Key privateKey = new();
-                BitcoinSecret bitcoinSecret = privateKey.GetBitcoinSecret(Network.Main);
-                string address = bitcoinSecret.GetAddress(addressType).ToString();
-
-                Interlocked.Increment(ref addressesGenerated);
-                if (addressesGenerated % 100 == 0)
-                {
-                    UpdateAddressesGeneratedUI();
-                }
-
-                if (address.Contains(pattern, StringComparison.OrdinalIgnoreCase)) // found a match regardless of case settings
-                {
-                    if (!caseSensitiveSearch) // if not a case sensitive search
-                    {
-                        result.Add($"{address}|{bitcoinSecret}"); // return this result
-                        return;
-                    }
-                    else // if it is a case sensitive search
-                    {
-                        if (address.Contains(pattern)) // if this match was case sensitive
-                        {
-                            result.Add($"{address}|{bitcoinSecret}"); // return this result
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-*/
 
         private void GenerateVanityAddressSuffix(string pattern, ConcurrentBag<string> result, CancellationToken token)
         {
@@ -565,49 +669,20 @@ namespace Bitvain
             }
         }
 
-        /*
-        private void GenerateVanityAddressSuffix(string pattern, ConcurrentBag<string> result, CancellationToken token)
-        {
-            while (!token.IsCancellationRequested)
-            {
-                Key privateKey = new();
-                BitcoinSecret bitcoinSecret = privateKey.GetBitcoinSecret(Network.Main);
-                string address = bitcoinSecret.GetAddress(addressType).ToString();
-
-                Interlocked.Increment(ref addressesGenerated);
-                if (addressesGenerated % 100 == 0)
-                {
-                    UpdateAddressesGeneratedUI();
-                }
-
-                if (address.EndsWith(pattern, StringComparison.OrdinalIgnoreCase)) // found a match regardless of case settings
-                {
-                    if (!caseSensitiveSearch) // if not a case sensitive search
-                    {
-                        result.Add($"{address}|{bitcoinSecret}"); // return this result
-                        return;
-                    }
-                    else // if it is a case sensitive search
-                    {
-                        if (address.Contains(pattern)) // if this match was case sensitive
-                        {
-                            result.Add($"{address}|{bitcoinSecret}"); // return this result
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        */
         private void UpdateAddressesGeneratedUI()
         {
+            if (!lblAddressesGenerated.IsHandleCreated)
+            {
+                return;
+            }
+
             lblAddressesGenerated.Invoke((MethodInvoker)delegate
             {
                 lblAddressesGenerated.Text = addressesGenerated.ToString();
             });
         }
 
-        private void UpdatePerformanceMetrics(object sender, EventArgs e)
+        private void UpdatePerformanceMetrics(object? sender, EventArgs e)
         {
             if (stopwatch.IsRunning)
             {
@@ -765,119 +840,6 @@ namespace Bitvain
         }
 
         #endregion
-        #endregion
-
-        private void BtnCPUThreadsLess_Click(object sender, EventArgs e)
-        {
-            if (ThreadCount > 1)
-            {
-                ThreadCount--;
-                lblCPUThreads.Invoke((MethodInvoker)delegate
-                {
-                    lblCPUThreads.Text = ThreadCount.ToString("D2");
-                });
-            }
-            if (ThreadCount < 2)
-            {
-                btnCPUThreadsLess.Enabled = false;
-            }
-            else
-            {
-                btnCPUThreadsLess.Enabled = true;
-            }
-            btnCPUThreadsMore.Enabled = true;
-        }
-
-        private void BtnCPUThreadsMore_Click(object sender, EventArgs e)
-        {
-            if (ThreadCount < 64)
-            {
-                ThreadCount++;
-                lblCPUThreads.Invoke((MethodInvoker)delegate
-                {
-                    lblCPUThreads.Text = ThreadCount.ToString("D2");
-                });
-            }
-            if (ThreadCount >= 64)
-            {
-                btnCPUThreadsMore.Enabled = false;
-            }
-            else
-            {
-                btnCPUThreadsMore.Enabled = true;
-            }
-            btnCPUThreadsLess.Enabled = true;
-        }
-
-        private void ComboBoxAddressType_OnSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxAddressType.SelectedIndex == 0) // legacy P2PKH (1 prefix) base58
-            {
-                comboBoxCaseSensitive.Enabled = true;
-                lblExamplePrefix.Invoke((MethodInvoker)delegate
-                {
-                    lblExamplePrefix.Text = "1";
-                });
-                addressType = ScriptPubKeyType.Legacy;
-                addressPrefixLength = 1;
-                totalAddressLength = 34;
-                exampleAddressWithoutPrefix = "BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2";
-                disallowedCharacters = ['0', 'O', 'I', 'l'];
-                disallowedCharsErrorMessage = "Legacy: O (upper o), 0 (zero), I (upper i) && l (lower L) are invalid characters";
-            }
-
-            if (comboBoxAddressType.SelectedIndex == 1) // segwitP2SH (3 prefix) base58
-            {
-                comboBoxCaseSensitive.Enabled = true;
-                lblExamplePrefix.Invoke((MethodInvoker)delegate
-                {
-                    lblExamplePrefix.Text = "3";
-                });
-                addressType = ScriptPubKeyType.SegwitP2SH;
-                addressPrefixLength = 1;
-                totalAddressLength = 34;
-                exampleAddressWithoutPrefix = "BpNv8kWhGqjiKysyaADpsdrFABNqZhdCE";
-                disallowedCharacters = ['0', 'O', 'I', 'l'];
-                disallowedCharsErrorMessage = "SegwitP2SH: O (upper o), 0 (zero), I (upper i) && l (lower L) are invalid characters";
-            }
-
-            if (comboBoxAddressType.SelectedIndex == 2) // segwit (bc1q prefix) bech32
-            {
-                comboBoxCaseSensitive.SelectedIndex = 0;
-                comboBoxCaseSensitive.Enabled = false;
-                textBoxTargetString.Text = textBoxTargetString.Text.ToLower();
-                lblExamplePrefix.Invoke((MethodInvoker)delegate
-                {
-                    lblExamplePrefix.Text = "bc1q";
-                });
-                addressType = ScriptPubKeyType.Segwit;
-                addressPrefixLength = 4;
-                totalAddressLength = 42;
-                exampleAddressWithoutPrefix = "ar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq";
-                disallowedCharacters = ['b', 'i', 'o', 'l', 'O', 'B', 'I', 'L']; // nb the caps get translated to lower-case so they need disallowing too
-                disallowedCharsErrorMessage = "Segwit: b, i, o (lower O) && l (lower L) are invalid characters";
-            }
-
-            if (comboBoxAddressType.SelectedIndex == 3) // taproot (bc1p prefix) bech32
-            {
-                comboBoxCaseSensitive.SelectedIndex = 0;
-                comboBoxCaseSensitive.Enabled = false;
-                textBoxTargetString.Text = textBoxTargetString.Text.ToLower();
-                lblExamplePrefix.Invoke((MethodInvoker)delegate
-                {
-                    lblExamplePrefix.Text = "bc1p";
-                });
-                addressType = ScriptPubKeyType.TaprootBIP86;
-                addressPrefixLength = 4;
-                totalAddressLength = 62;
-                exampleAddressWithoutPrefix = "0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqzk5jj0";
-                disallowedCharacters = ['b', 'i', 'o', 'l', 'O', 'B', 'I', 'L']; // nb the caps get translated to lower-case so they need disallowing too
-                disallowedCharsErrorMessage = "Taproot: b, i, o (lower O) && l (lower L) are invalid characters";
-            }
-
-            RecalculateDifficulty();
-            ConstructExample();
-        }
 
         private void BtnCopyAddress_Click(object sender, EventArgs e)
         {
@@ -1014,5 +976,6 @@ namespace Bitvain
                 panelHelp.Visible = true;
             });
         }
+        #endregion
     }
 }

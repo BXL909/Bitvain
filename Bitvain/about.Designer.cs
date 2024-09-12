@@ -64,40 +64,40 @@ namespace Bitvain
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Font = new Font("Segoe UI", 9F);
+            linkLabel1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             linkLabel1.LinkColor = Color.FromArgb(255, 128, 0);
             linkLabel1.Location = new Point(157, 97);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(97, 15);
+            linkLabel1.Size = new Size(86, 15);
             linkLabel1.TabIndex = 2;
             linkLabel1.TabStop = true;
-            linkLabel1.Text = "BITVAIN WEBSITE";
+            linkLabel1.Text = "Bitvain website";
             linkLabel1.LinkClicked += LinkLabel1_LinkClicked;
             // 
             // linkLabel2
             // 
             linkLabel2.AutoSize = true;
-            linkLabel2.Font = new Font("Segoe UI", 9F);
+            linkLabel2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             linkLabel2.LinkColor = Color.FromArgb(255, 128, 0);
             linkLabel2.Location = new Point(157, 116);
             linkLabel2.Name = "linkLabel2";
-            linkLabel2.Size = new Size(137, 15);
+            linkLabel2.Size = new Size(121, 15);
             linkLabel2.TabIndex = 3;
             linkLabel2.TabStop = true;
-            linkLabel2.Text = "MORE BXL909 PROJECTS";
+            linkLabel2.Text = "More BXL909 projects";
             linkLabel2.LinkClicked += LinkLabel2_LinkClicked;
             // 
             // linkLabel3
             // 
             linkLabel3.AutoSize = true;
-            linkLabel3.Font = new Font("Segoe UI", 9F);
+            linkLabel3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             linkLabel3.LinkColor = Color.FromArgb(255, 128, 0);
             linkLabel3.Location = new Point(157, 135);
             linkLabel3.Name = "linkLabel3";
-            linkLabel3.Size = new Size(85, 15);
+            linkLabel3.Size = new Size(80, 15);
             linkLabel3.TabIndex = 4;
             linkLabel3.TabStop = true;
-            linkLabel3.Text = "TIPS / DONATE";
+            linkLabel3.Text = "Tips / support";
             linkLabel3.LinkClicked += LinkLabel3_LinkClicked;
             // 
             // btnExit
@@ -109,7 +109,7 @@ namespace Bitvain
             btnExit.BorderSize = 0;
             btnExit.FlatAppearance.BorderSize = 0;
             btnExit.FlatStyle = FlatStyle.Flat;
-            btnExit.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExit.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnExit.ForeColor = Color.White;
             btnExit.Location = new Point(292, 3);
             btnExit.Name = "btnExit";
@@ -123,7 +123,7 @@ namespace Bitvain
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 8F);
+            label12.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
             label12.ForeColor = Color.FromArgb(127, 137, 163);
             label12.Location = new Point(157, 45);
             label12.Name = "label12";
@@ -131,7 +131,7 @@ namespace Bitvain
             label12.TabIndex = 23;
             label12.Text = "v1.0";
             // 
-            // about
+            // About
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -146,7 +146,7 @@ namespace Bitvain
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "about";
+            Name = "About";
             Text = "about";
             Paint += About_Paint;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

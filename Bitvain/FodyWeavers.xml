@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
+	<Costura>
+		<!-- Embeds all assemblies, including references -->
+		
+		<!-- Optional: You can use this to exclude any assemblies if needed -->
+		<!--<ExcludeAssemblies>SomeLibrary</ExcludeAssemblies>-->
+
+
+
+		<!-- Disable this if you want to troubleshoot Costura -->
+
+		<!-- Optionally compress the assemblies if you want to reduce the exe size -->
+	</Costura>
+</Weavers>

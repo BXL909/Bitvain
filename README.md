@@ -1,3 +1,5 @@
+# Bitvain 🦚
+
 Bitvain - Bitcoin vanity address generator.
 
 https://bitvain.btcdir.org
